@@ -6,7 +6,21 @@ type Mutation  {
 	signup(email: String! ,name: String!, password: String!): User
 }
 type User {
+	id: String!,
 	email: String!,
 	name: String!,
 	password: String!
+}
+type Todos {
+	id: String!,
+	user_id: String!,
+	title: String
+}
+type Items {
+	id: String!,
+	todo_id: String!,
+	content:String,
+	updated_at:String,
+	is_complete:String,
+	completed_at:String
 }
