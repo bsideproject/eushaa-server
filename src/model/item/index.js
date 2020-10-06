@@ -21,3 +21,20 @@ exports.update = async (id, updateData) => {
     const item = await Items.update(updateData, { where: { id } })
     return item;
 }
+
+// exports.updateContent = async ({ id, content }) => {
+//     const item = await Items.update({
+//         content
+//     }, { where: { id } })
+//     return item;
+// }
+
+// exports.updateComplete = async ({ id, isComplete, completedAt }) => {
+
+//     const item = await Items.update({
+//         is_complete: isComplete,
+//         completed_at: completedAt
+//     }, { where: { id } })
+//     return item;
+// }
+
