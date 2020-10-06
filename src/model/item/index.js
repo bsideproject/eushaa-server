@@ -11,4 +11,13 @@ exports.insert = async ({ todoId, content }) => {
     return item;
 }
 
-
+exports.update = async (id, updateData) => {
+    updateData = Object.entries(updateData)
+        .map(([k, v]) => [styleHyphenFormat(k), v])
+        .reduce((acc, [k, v]) => {
+            acc[k] = v
+            return acc;
+        })
+    const item = await Items.update(updateData, { where: { id } })
+    return item;
+}
