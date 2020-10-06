@@ -21,3 +21,10 @@ exports.update = async (id, updateData) => {
     const todo = await Todos.update(updateData, { where: { id } })
     return todo;
 }
+
+// exports.updateTitle = async ({ id, title }) => {
+//     const todo = await Todos.update({
+//         title
+//     }, { where: { id } })
+//     return todo;
+// }
