@@ -14,13 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   items.init({
-    timestamps: false,
     todo_id: DataTypes.INTEGER,
     content: DataTypes.TEXT,
     updated_at: DataTypes.DATE,
-    is_complete: DataTypes.ENUM,
+    is_complete: DataTypes.ENUM('Y', 'N'),
     completed_at: DataTypes.DATE
   }, {
+    timestamps: false,
     sequelize,
     modelName: 'items',
   });
