@@ -14,10 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   todos.init({
-    timestamps: false,
     user_id: DataTypes.INTEGER,
     title: DataTypes.STRING(45)
   }, {
+    timestamps: false,
     sequelize,
     modelName: 'todos',
   });
