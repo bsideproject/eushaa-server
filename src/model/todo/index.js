@@ -26,3 +26,16 @@ exports.getTodo = async (user_id, title) => {
 		console.error(err)
 	}
 }
+
+exports.removeTodo = async id => {
+	try {
+		const result = await Todos.destroy({
+			where: {
+				id
+			}
+		})
+		return result
+	} catch (err) {
+		console.error(err)
+	}
+}
