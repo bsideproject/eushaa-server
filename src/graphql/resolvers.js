@@ -14,17 +14,21 @@ const resolvers = {
 		todoLists: (_, { user_id, title }) => item.getTodoItems(user_id, title),
     },
     Mutation: {
-		signup: (_, { email, name, password }) => insertUser(email, name, password),
-
-		deleteTodo: (_, { id }) => {
-			const result = todo.removeTodo(id)
-			if (result) {
-				item.removeItemsAll(id)
-			}
-			return result
-		},
-
-		deleteItem: (_, { id }) => item.removeItem(id),
+		  signup: (_, { email, name, password }) => insertUser(email, name, password),
+      
+      makeTodo: (_, { userId, title }) => todo.insert({ userId, title }),
+      updateTodo: (_, { id, userId, title }) => todo.update(id, { userId, title }),
+      deleteTodo: (_, { id }) => {
+			  const result = todo.removeTodo(id)
+			  if (result) {
+				  item.removeItemsAll(id)
+			  }
+			  return result
+		  },
+      
+      makeItem: (_, { todoId, content }) => item.insert({ todoId, content }),
+      updateItem: (_, { id, todoId, content, isComplete, completedAt }) => item.update(id, { todoId, content, isComplete, completedAt }),
+		  deleteItem: (_, { id }) => item.removeItem(id),
     }
 };
 
