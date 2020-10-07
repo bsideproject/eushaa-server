@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.todos, { foreignKey: 'todo_id', targetKey: 'id' });
     }
   };
   items.init({
@@ -24,5 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'items',
   });
+
+
+
   return items;
 };
