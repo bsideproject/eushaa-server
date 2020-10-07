@@ -1,4 +1,4 @@
-const { Items } = require('../../../db/models');
+const { Todos, Items } = require('../../../db/models');
 
 exports.getItems = async todo_id => {
 	try {
@@ -10,6 +10,20 @@ exports.getItems = async todo_id => {
 		return items;
 	} catch (err) {
 		console.error(err);
+	}
+}
+
+exports.getTodoItems = async (user_id, title) => {
+	try {
+		const items = await Items.findAll({
+			include: {
+				model: Todos,
+				where: { user_id, title },
+			},
+		})
+		return items
+	} catch (err) {
+		console.error(err)
 	}
 }
 
