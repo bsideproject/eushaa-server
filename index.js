@@ -14,7 +14,8 @@ const options = {
 }
 
 sequelize.sync();
-const server = new GraphQLServer({ 
-	typeDefs: "./src/graphql/schema.graphql", 
-	resolvers });
-server.start(options, ({ port }) => console.log(`Server is running on learn-express.run.goorm.io:${port}`));
+const server = new GraphQLServer({
+  typeDefs: "./src/graphql/schema.graphql",
+  resolvers
+});
+server.start(options, ({ port }) => console.log(`Server is running on :${port}`));
