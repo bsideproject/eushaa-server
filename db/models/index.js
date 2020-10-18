@@ -37,6 +37,7 @@ db.Sequelize = Sequelize;
 db.User = require('./user')(sequelize, Sequelize);
 db.Todos = require('./todos')(sequelize, Sequelize);
 db.Items = require('./items')(sequelize, Sequelize);
+db.spaceItemLogs = require('./space_item_log')(sequelize, Sequelize);
 
 //db.Todos.hasMany(db.Items, { foreignKey: 'todo_id', sourceKey: 'id' });
 //db.Items.belongsTo(db.Todos, { foreignKey: 'todo_id', targetKey: 'id' });
