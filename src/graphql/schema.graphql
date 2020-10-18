@@ -20,6 +20,8 @@ type Mutation {
     completedAt: String
   ): Int!
   deleteItem(id: Int!): Int!
+
+  spaceItemLog(teamId: Int!, userId: Int!, itemId: Int!): SpaceItemLog
 }
 type User {
   id: String!
@@ -41,7 +43,6 @@ type Items {
   is_complete: String
   completed_at: Date
 }
-
 
 type Teams {
   id: String!
