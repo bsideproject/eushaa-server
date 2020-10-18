@@ -42,5 +42,7 @@ db.Items = require('./items')(sequelize, Sequelize);
 //db.Items.belongsTo(db.Todos, { foreignKey: 'todo_id', targetKey: 'id' });
 
 db.User.hasMany(db.Todos, { foreignKey: 'user_id', sourceKey: 'id' });
+db.User.belongsTo(db.teams, { foreignKey: 'team_id', targetKey: 'id' });
+db.User.hasMany(db.space_item_log, { foreignKey: 'user_id', sourceKey: 'id' });
 
 module.exports = db;
