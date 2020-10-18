@@ -5,6 +5,8 @@ type Query {
   todo(user_id: Int!, title: String!): Todos
   items(todo_id: Int!): [Items!]!
   todoLists(user_id: Int!, title: String!): [Items!]!
+
+  level(levelNumber): Levels
 }
 type Mutation {
   signup(email: String!, name: String!, password: String!): User
