@@ -49,3 +49,8 @@ exports.autheticate = (authorization) => {
 		throw new Error('token expired')
 	}
 }
+
+exports.participateTeam = async(user_id, team_id) => {
+  const [result, user] = await User.update({ team_id }, { where: { id: user_id } })
+  return result
+}
