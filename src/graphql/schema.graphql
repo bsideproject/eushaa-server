@@ -5,6 +5,9 @@ type Query {
   todo(user_id: Int!, title: String!): Todos
   items(todo_id: Int!): [Items!]!
   todoLists(user_id: Int!, title: String!): [Items!]!
+
+  team(user_id: Int!): Teams
+  members(team_id: Int!): [User!]!
 }
 type Mutation {
   signup(email: String!, name: String!, password: String!): User
@@ -20,6 +23,12 @@ type Mutation {
     completedAt: String
   ): Int!
   deleteItem(id: Int!): Int!
+
+  makeTeam: Teams!
+  participateTeam(user_id: Int!, team_id: Int!): Int!
+  updateTeam(id: Int!, level: Int, gauge: Int): Int!
+  increaseValues(id: Int!, keys: [String!]!): Teams
+  deleteTeam(id: Int!): Int!
 }
 type User {
   id: String!
