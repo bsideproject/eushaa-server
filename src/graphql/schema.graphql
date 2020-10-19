@@ -5,6 +5,9 @@ type Query {
   todo(user_id: Int!, title: String!): Todos
   items(todo_id: Int!): [Items!]!
   todoLists(user_id: Int!, title: String!): [Items!]!
+
+  getSpaceItemsByLevel(levelId: Int!): [Items!]!
+  getSpaceItemsByTeam(teamId: Int!, levelId: Int!): [Items!]!
 }
 type Mutation {
   signup(email: String!, name: String!, password: String!): User
@@ -41,7 +44,6 @@ type Items {
   is_complete: String
   completed_at: Date
 }
-
 
 type Teams {
   id: String!

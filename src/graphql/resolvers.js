@@ -1,6 +1,7 @@
 const { insertUser, selectUser, autheticate } = require('../model/user')
 const item = require('../model/item')
 const todo = require('../model/todo')
+const spaceItem = require('../model/space_item')
 
 const resolvers = {
     Query: {
@@ -12,6 +13,9 @@ const resolvers = {
 
         items: (_, { todo_id }) => item.getItems(todo_id),
         todoLists: (_, { user_id, title }) => item.getTodoItems(user_id, title),
+
+        getSpaceItemsByLevel: (_, { levelId }) => spaceItem.getSpaceItemsByLevel({ levelId }),
+        getSpaceItemsByTeam: (_, { teamId, levelId }) => spaceItem.getSpaceItemsByTeam({ teamId, levelId })
     },
     Mutation: {
         signup: (_, { email, name, password }) => insertUser(email, name, password),
