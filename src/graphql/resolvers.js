@@ -1,6 +1,7 @@
 const { insertUser, selectUser, autheticate, participateTeam } = require('../model/user')
 const item = require('../model/item')
 const todo = require('../model/todo')
+const spaceItemLog = require('../model/space_item_log')
 const team = require('../model/team')
 
 const resolvers = {
@@ -34,11 +35,15 @@ const resolvers = {
         updateItem: (_, { id, content, isComplete, completedAt }) => item.update(id, { content, isComplete, completedAt }),
         deleteItem: (_, { id }) => item.removeItem(id),
 
+        //space item log
+        spaceItemLog: (_, { teamId, userId, itemId }) => spaceItemLog.insert({ teamId, userId, itemId })
+
         makeTeam: (_) => team.insert(),
         participateTeam: (_, { user_id, team_id }) => participateTeam(user_id, team_id),
         updateTeam: (_, { id, level, gauge }) => team.update(id, { level, gauge }),
         increaseValues: (_, { id, keys }) => team.increase(id, keys),
         deleteTeam: (_, { id }) => team.removeTeam(id),
+
     }
 };
 
