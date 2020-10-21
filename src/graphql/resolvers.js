@@ -20,7 +20,7 @@ const resolvers = {
         todoLists: (_, { user_id, title }) => item.getTodoItems(user_id, title),
 
 
-        level: (_, { levelNumber }) => level.get({ levelNumber })
+        level: (_, { levelNumber }) => level.get({ levelNumber }),
 
         team: (_, { user_id }) => team.getTeamByUserId(user_id),
         members: (_, { team_id }) => team.getUsersByTeamId(team_id),
@@ -44,7 +44,7 @@ const resolvers = {
         deleteItem: (_, { id }) => item.removeItem(id),
 
         //space item log
-        spaceItemLog: (_, { teamId, userId, itemId }) => spaceItemLog.insert({ teamId, userId, itemId })
+        spaceItemLog: (_, { teamId, userId, itemId }) => spaceItemLog.insert({ teamId, userId, itemId }),
 
         makeTeam: (_) => team.insert(),
         participateTeam: (_, { user_id, team_id }) => participateTeam(user_id, team_id),
