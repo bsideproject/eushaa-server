@@ -49,6 +49,8 @@ type Todos {
   id: String!
   user_id: String!
   title: String
+  is_complete: String
+  completed_at: Date
 }
 type Items {
   id: String!
