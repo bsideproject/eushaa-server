@@ -6,7 +6,12 @@ type Query {
   items(todo_id: Int!): [Items!]!
   todoLists(user_id: Int!, title: String!): [Items!]!
 
+
   level(levelNumber: Int!): Levels
+
+  team(user_id: Int!): Teams
+  members(team_id: Int!): [User!]!
+
 }
 type Mutation {
   signup(email: String!, name: String!, password: String!): User
@@ -22,6 +27,16 @@ type Mutation {
     completedAt: String
   ): Int!
   deleteItem(id: Int!): Int!
+
+
+  spaceItemLog(teamId: Int!, userId: Int!, itemId: Int!): SpaceItemLog
+
+  makeTeam: Teams!
+  participateTeam(user_id: Int!, team_id: Int!): Int!
+  updateTeam(id: Int!, level: Int, gauge: Int): Int!
+  increaseValues(id: Int!, keys: [String!]!): Teams
+  deleteTeam(id: Int!): Int!
+
 }
 type User {
   id: String!
@@ -43,7 +58,6 @@ type Items {
   is_complete: String
   completed_at: Date
 }
-
 
 type Teams {
   id: String!
