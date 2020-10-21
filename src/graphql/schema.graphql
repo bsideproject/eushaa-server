@@ -6,8 +6,12 @@ type Query {
   items(todo_id: Int!): [Items!]!
   todoLists(user_id: Int!, title: String!): [Items!]!
 
+
+  level(levelNumber: Int!): Levels
+
   team(user_id: Int!): Teams
   members(team_id: Int!): [User!]!
+
 }
 type Mutation {
   signup(email: String!, name: String!, password: String!): User
