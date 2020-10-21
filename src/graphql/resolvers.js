@@ -1,7 +1,8 @@
-const { insertUser, selectUser, autheticate } = require('../model/user')
+const { insertUser, selectUser, autheticate, participateTeam } = require('../model/user')
 const item = require('../model/item')
 const todo = require('../model/todo')
 const spaceItemLog = require('../model/space_item_log')
+const team = require('../model/team')
 
 const resolvers = {
     Query: {
@@ -13,6 +14,9 @@ const resolvers = {
 
         items: (_, { todo_id }) => item.getItems(todo_id),
         todoLists: (_, { user_id, title }) => item.getTodoItems(user_id, title),
+
+        team: (_, { user_id }) => team.getTeamByUserId(user_id),
+        members: (_, { team_id }) => team.getUsersByTeamId(team_id),
     },
     Mutation: {
         signup: (_, { email, name, password }) => insertUser(email, name, password),
@@ -33,6 +37,13 @@ const resolvers = {
 
         //space item log
         spaceItemLog: (_, { teamId, userId, itemId }) => spaceItemLog.insert({ teamId, userId, itemId })
+
+        makeTeam: (_) => team.insert(),
+        participateTeam: (_, { user_id, team_id }) => participateTeam(user_id, team_id),
+        updateTeam: (_, { id, level, gauge }) => team.update(id, { level, gauge }),
+        increaseValues: (_, { id, keys }) => team.increase(id, keys),
+        deleteTeam: (_, { id }) => team.removeTeam(id),
+
     }
 };
 
