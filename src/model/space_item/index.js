@@ -1,4 +1,4 @@
-const { SpaceItems, SpaceItemLogs } = require('../../../db/models');
+const { SpaceItems, SpaceItemLog } = require('../../../db/models');
 
 const { styleUpperFormat } = require('../../lib/util')
 
@@ -10,16 +10,16 @@ const makeCamelKeyObject = (object) => Object.entries(object)
         return acc;
     }, {});
 
-const curryMakeTeamSpaceItems = (spaceItemLogs) => ({ id, levelId, posX, posY, deactivateImage, activateImage }) => {
+const curryMakeTeamSpaceItems = (spaceItemLogs) => ({dataValues}) => {
     if (spaceItemLogs.findIndex((spaceItemLog) => spaceItemLog.spaceItem.id === spaceItem.id) !== -1) {
-        return { id, levelId, posX, posY, image: activateImage }
+        return { id : dataValues.id, level_id : dataValues.level_id, pos_x : dataValues.pos_x, pos_y : dataValues.pos_y, image: dataValues.activate_image }
     } else {
-        return { id, levelId, posX, posY, image: deactivateImage }
+        return { id : dataValues.id, level_id : dataValues.level_id, pos_x : dataValues.pos_x, pos_y :dataValues.pos_y, image: dataValues.deactivate_image }
     }
 };
 
 exports.getSpaceItemsByLevel = async ({ levelId }) => {
-    const spaceItems = SpaceItems.findAll({
+    const spaceItems = await SpaceItems.findAll({
         where: {
             level_id: levelId
         }
@@ -28,16 +28,16 @@ exports.getSpaceItemsByLevel = async ({ levelId }) => {
 }
 
 exports.getSpaceItemsByTeam = async ({ teamId, levelId }) => {
-    const spaceItems = SpaceItems.findAll({
+    const spaceItems = await SpaceItems.findAll({
         where: {
             level_id: levelId
         }
     })
 
-    const spaceItemLogs = SpaceItemLogs.findAll({
+    const spaceItemLogs = await SpaceItemLog.findAll({
         include: {
             model: SpaceItems,
-            as: 'spaceItem',
+            as: 'space_item',
             where: {
                 level_id: levelId
             }
