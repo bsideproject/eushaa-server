@@ -44,6 +44,11 @@ db.Sequelize = Sequelize;
 // db.SpaceItemLog = require('./space_item_log')(sequelize, Sequelize);
 // db.SpaceItems = require('./space_items')(sequelize, Sequelize);
 
+db.Levels = require('./levels')(sequelize, Sequelize);
+
+db.spaceItemLogs = require('./space_item_log')(sequelize, Sequelize);
+
+
 //db.Todos.hasMany(db.Items, { foreignKey: 'todo_id', sourceKey: 'id' });
 //db.Items.belongsTo(db.Todos, { foreignKey: 'todo_id', targetKey: 'id' });
 
