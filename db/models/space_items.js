@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-			this.belongsTo(models.levels, { foreignKey: 'level_id', targetKey: 'id' });
-			this.hasMany(models.space_item_log, { foreignKey: 'item_id', sourceKey: 'id' });
+			this.belongsTo(models.Levels, { foreignKey: 'level_id', targetKey: 'id' });
+			this.hasMany(models.SpaceItemLog, { foreignKey: 'item_id', sourceKey: 'id' });
     }
   };
   spaceItems.init({

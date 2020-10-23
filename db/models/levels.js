@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-			this.hasMany(models.space_items, { foreignKey: 'level_id', sourceKey: 'id' });
+			this.hasMany(models.SpaceItems, { foreignKey: 'level_id', sourceKey: 'id' });
     }
   };
   levels.init({

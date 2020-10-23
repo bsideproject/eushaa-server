@@ -1,11 +1,11 @@
-const { Todos } = require('../../../db/models');
+const { todos } = require('../../../db/models');
 
 
 const { styleHyphenFormat } = require('../../lib/util')
 
 exports.insert = async ({ userId, title }) => {
 
-    const todo = await Todos.create({
+    const todo = await todos.create({
         user_id: userId,
         title
     })
@@ -19,7 +19,7 @@ exports.update = async (id, updateData) => {
             acc[k] = v
             return acc;
         }, {})
-    const [result, todo] = await Todos.update(updateData, { where: { id } })
+    const [result, todo] = await todos.update(updateData, { where: { id } })
     return result;
 }
 
@@ -32,7 +32,7 @@ exports.update = async (id, updateData) => {
 
 exports.getTodos = async user_id => {
     try {
-        const todos = await Todos.findAll({
+        const todos = await todos.findAll({
             where: {
                 user_id
             }
@@ -45,7 +45,7 @@ exports.getTodos = async user_id => {
 
 exports.getTodo = async (user_id, title) => {
     try {
-        const todo = await Todos.findOne({
+        const todo = await todos.findOne({
             where: {
                 user_id,
                 title
@@ -59,7 +59,7 @@ exports.getTodo = async (user_id, title) => {
 
 exports.removeTodo = async id => {
     try {
-        const result = await Todos.destroy({
+        const result = await todos.destroy({
             where: {
                 id
             }

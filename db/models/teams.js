@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 			this.hasMany(models.User, { foreignKey: 'team_id', sourceKey: 'id' });
-			this.hasMany(models.space_item_log, { foreignKey: 'team_id', sourceKey: 'id' });
+			this.hasMany(models.SpaceItemLog, { foreignKey: 'team_id', sourceKey: 'id' });
     }
   };
   teams.init({

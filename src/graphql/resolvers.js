@@ -1,6 +1,7 @@
 const { insertUser, selectUser, autheticate, participateTeam } = require('../model/user')
 const item = require('../model/item')
 const todo = require('../model/todo')
+const spaceItem = require('../model/space_item')
 
 const level = require('../model/level')
 
@@ -20,10 +21,15 @@ const resolvers = {
         todoLists: (_, { user_id, title }) => item.getTodoItems(user_id, title),
 
 
+        getSpaceItemsByLevel: (_, { levelId }) => spaceItem.getSpaceItemsByLevel({ levelId }),
+        getSpaceItemsByTeam: (_, { teamId, levelId }) => spaceItem.getSpaceItemsByTeam({ teamId, levelId })
+
+
         level: (_, { levelNumber }) => level.get({ levelNumber }),
 
         team: (_, { user_id }) => team.getTeamByUserId(user_id),
         members: (_, { team_id }) => team.getUsersByTeamId(team_id),
+
 
     },
     Mutation: {

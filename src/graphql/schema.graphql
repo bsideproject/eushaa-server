@@ -7,10 +7,15 @@ type Query {
   todoLists(user_id: Int!, title: String!): [Items!]!
 
 
+  getSpaceItemsByLevel(levelId: Int!): [SpaceItems!]!
+  getSpaceItemsByTeam(teamId: Int!, levelId: Int!): [SpaceItems2!]!
+
+
   level(levelNumber: Int!): Levels
 
   team(user_id: Int!): Teams
   members(team_id: Int!): [User!]!
+
 
 }
 type Mutation {
@@ -82,7 +87,13 @@ type SpaceItems {
   deactivate_image: String
   activate_image: String
 }
-
+type SpaceItems2 {
+  id: String!
+  level_id: String!
+  pos_x: Float
+  pos_y: Float
+  image: String
+}
 type SpaceItemLog {
   id: String!
   team_id: String!
