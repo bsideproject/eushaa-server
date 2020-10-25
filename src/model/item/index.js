@@ -1,4 +1,4 @@
-const { todos, items } = require('../../../db/models');
+const { Todos, Items } = require('../../../db/models');
 
 const { styleHyphenFormat } = require('../../lib/util')
 

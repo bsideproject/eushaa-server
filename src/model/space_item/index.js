@@ -11,7 +11,7 @@ const makeCamelKeyObject = (object) => Object.entries(object)
     }, {});
 
 const curryMakeTeamSpaceItems = (spaceItemLogs) => ({dataValues}) => {
-    if (spaceItemLogs.findIndex((spaceItemLog) => spaceItemLog.spaceItem.id === spaceItem.id) !== -1) {
+    if (spaceItemLogs.findIndex((spaceItemLog) => spaceItemLog.item_id === dataValues.id) !== -1) {
         return { id : dataValues.id, level_id : dataValues.level_id, pos_x : dataValues.pos_x, pos_y : dataValues.pos_y, image: dataValues.activate_image }
     } else {
         return { id : dataValues.id, level_id : dataValues.level_id, pos_x : dataValues.pos_x, pos_y :dataValues.pos_y, image: dataValues.deactivate_image }

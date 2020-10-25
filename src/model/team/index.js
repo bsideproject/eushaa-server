@@ -1,12 +1,12 @@
-const { User, teams } = require('../../../db/models');
+const { User, Teams } = require('../../../db/models');
 
 exports.insert = async() => {
-    const team = await teams.create()
+    const team = await Teams.create()
     return team.dataValues;
 }
 
 exports.getTeamByUserId = async user_id => {
-	const team = await teams.findOne({
+	const team = await Teams.findOne({
 		include: {
 			model: User,
 			where: { id: user_id },
@@ -26,13 +26,13 @@ exports.getUsersByTeamId = async team_id => {
 }
 
 exports.update = async (id, update_datas) => {
-	const [result, team] = await teams.update(update_datas, { where: { id } })
+	const [result, team] = await Teams.update(update_datas, { where: { id } })
 	return result
 }
 
 exports.increase = async (id, keys) => {
   try {
-    const team = await teams.findByPk(id)
+    const team = await Teams.findByPk(id)
     const incrementResult = await team.increment(keys);
     return team.reload()
   } catch (err) {
@@ -42,7 +42,7 @@ exports.increase = async (id, keys) => {
 
 exports.removeTeam = async id => {
     try {
-        const result = await teams.destroy({
+        const result = await Teams.destroy({
             where: {
                 id
             }
