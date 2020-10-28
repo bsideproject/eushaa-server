@@ -4,9 +4,40 @@ const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 
-const { User } = require('../../../db/models');
+const { User, UserTypes } = require('../../../db/models');
+const { styleHyphenFormat } = require('../../lib/util')
 
+const insertUserType = async (oldObj)=>{
+	const userType = await UserTypes.findOne({where:{type:oldObj.type}})
+	const newObj = {...oldObj, userTypeId : userType.id}
+	delete newObj.type
+	return newObj;
+}
 
+exports.get = async (id) => {
+    const user = await User.findOne({
+		where:{
+			id
+		}
+	})
+    return user;
+}
+exports.update = async (id,updateData) =>{
+
+	if(updateData.type){
+		updateData = await insertUserType(updateData)
+	}
+
+	updateData = Object.entries(updateData)
+        .filter(([k, v]) => v)
+        .map(([k, v]) => [styleHyphenFormat(k), v])
+        .reduce((acc, [k, v]) => {
+            acc[k] = v
+            return acc;
+        }, {})
+    const [result, user] = await User.update(updateData, { where: { id } })
+    return result;
+}
 exports.insertUser = async (email, name, password) => {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(password, salt);
@@ -26,7 +57,7 @@ exports.selectUser = async (email, password) => {
 		}
 	})
 	if (user) {
-		if (await bcrypt.compareSync(password, user.password)) {
+		if (await bcrypt.compare(password, user.password)) {
 			const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, process.env.JWT_SECRET, {
 				algorithm: 'HS256',
 				expiresIn: '1h',
