@@ -55,5 +55,6 @@ db.Sequelize = Sequelize;
 db.User.hasMany(db.Todos, { foreignKey: 'user_id', sourceKey: 'id' });
 db.User.belongsTo(db.Teams, { foreignKey: 'team_id', targetKey: 'id' });
 db.User.hasMany(db.SpaceItemLog, { foreignKey: 'user_id', sourceKey: 'id' });
+db.User.belongsTo(db.UserTypes, {  foreignKey: 'user_type_id', sourceKey: 'id' });
 
 module.exports = db;

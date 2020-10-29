@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 			this.hasMany(models.User, { foreignKey: 'team_id', sourceKey: 'id' });
-			this.hasMany(models.SpaceItemLog, { foreignKey: 'team_id', sourceKey: 'id' });
+      this.hasMany(models.SpaceItemLog, { foreignKey: 'team_id', sourceKey: 'id' });
+      this.belongsTo(models.TeamTypes, { foreignKey: 'team_type_id', sourceKey: 'id' })
     }
   };
   teams.init({

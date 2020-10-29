@@ -1,4 +1,4 @@
-const { insertUser, selectUser, autheticate, participateTeam } = require('../model/user')
+const user= require('../model/user')
 const item = require('../model/item')
 const todo = require('../model/todo')
 const spaceItem = require('../model/space_item')
@@ -11,8 +11,11 @@ const team = require('../model/team')
 
 const resolvers = {
     Query: {
-        login: (_, { email, password }) => selectUser(email, password),
-        isLogin: (_, { authorization }) => autheticate(authorization),
+
+        user:(_, {id}) => user.get(id),
+
+        login: (_, { email, password }) => user.selectUser(email, password),
+        isLogin: (_, { authorization }) => user.autheticate(authorization),
 
         todos: (_, { user_id }) => todo.getTodos(user_id),
         todo: (_, { user_id, title }) => todo.getTodo(user_id, title),
@@ -27,13 +30,16 @@ const resolvers = {
 
         level: (_, { levelNumber }) => level.get({ levelNumber }),
 
-        team: (_, { user_id }) => team.getTeamByUserId(user_id),
+        team: (_, { id }) => team.get(id),
+        teamByUser:(_, { user_id }) => team.getTeamByUserId(user_id),
         members: (_, { team_id }) => team.getUsersByTeamId(team_id),
 
 
     },
     Mutation: {
-        signup: (_, { email, name, password }) => insertUser(email, name, password),
+
+        signup: (_, { email, name, password }) => user.insertUser(email, name, password),
+        updateUser:(_, {id, name, team_id, type}) => user.update(id, {name, team_id, type}),
 
         makeTodo: (_, { userId, title }) => todo.insert({ userId, title }),
         updateTodo: (_, { id, title }) => todo.update(id, { title }),
@@ -52,8 +58,8 @@ const resolvers = {
         //space item log
         spaceItemLog: (_, { teamId, userId, itemId }) => spaceItemLog.insert({ teamId, userId, itemId }),
 
-        makeTeam: (_) => team.insert(),
-        participateTeam: (_, { user_id, team_id }) => participateTeam(user_id, team_id),
+        makeTeam: (_,{type}) => team.insert(type),
+        participateTeam: (_, { user_id, team_id }) => user.participateTeam(user_id, team_id),
         updateTeam: (_, { id, level, gauge }) => team.update(id, { level, gauge }),
         increaseValues: (_, { id, keys }) => team.increase(id, keys),
         deleteTeam: (_, { id }) => team.removeTeam(id),
