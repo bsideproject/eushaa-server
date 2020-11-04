@@ -71,11 +71,14 @@ type Items {
 }
 
 type Teams {
-  id: String!
+	id: String!
   level: Int
   gauge: Int
   created_at: Date
   team_type_id: Int
+  members: [User]
+	type: TeamType
+	spaces: [Space]
 }
 
 type Levels {
@@ -106,5 +109,24 @@ type SpaceItemLog {
   user_id: String!
   created_at: Date
 }
+type TeamType {
+  id: String!
+  type: String!
+  description: String
+}
 
+type Space{
+	id: Int!
+  level: Int
+	bg_image: String
+	space_items: [SpaceItem]
+}
+
+type SpaceItem{
+	id: String!
+  level_id: String!
+  pos_x: Float
+  pos_y: Float
+  image: String
+}
 scalar Date
