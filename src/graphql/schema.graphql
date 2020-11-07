@@ -1,5 +1,4 @@
 type Query {
-
   user(id: Int!): User
 
   login(email: String!, password: String!): String
@@ -17,11 +16,10 @@ type Query {
   team(id: Int!): Teams
   members(team_id: Int!): [User!]!
   teamByUser(user_id: Int!): Teams
-
 }
 type Mutation {
   signup(email: String!, name: String!, password: String!): User
-  updateUser(id:Int! ,name:String, team_id:Int, type: String): Int!
+  updateUser(id: Int!, name: String, team_id: Int, type: String): Int!
 
   makeTodo(userId: Int!, title: String): Todos!
   updateTodo(id: Int!, title: String): Int!
@@ -36,7 +34,6 @@ type Mutation {
   ): Int!
   deleteItem(id: Int!): Int!
 
-
   spaceItemLog(teamId: Int!, userId: Int!, itemId: Int!): SpaceItemLog
 
   makeTeam(type: String!): Teams!
@@ -44,15 +41,14 @@ type Mutation {
   updateTeam(id: Int!, level: Int, gauge: Int): Int!
   increaseValues(id: Int!, keys: [String!]!): Teams
   deleteTeam(id: Int!): Int!
-
 }
 type User {
   id: String!
   email: String!
   name: String!
   password: String!
-  team_id: String
-  user_type_id: Int
+  team: Teams
+  user_type: UserType
 }
 type Todos {
   id: String!
@@ -71,14 +67,13 @@ type Items {
 }
 
 type Teams {
-	id: String!
+  id: String!
   level: Int
   gauge: Int
   created_at: Date
-  team_type_id: Int
-  members: [User]
-	type: TeamType
-	spaces: [Space]
+  users: [User]
+  team_type: TeamType
+  spaces: [Space]
 }
 
 type Levels {
@@ -109,24 +104,32 @@ type SpaceItemLog {
   user_id: String!
   created_at: Date
 }
+
+type UserType {
+  id: String!
+  type: String!
+  description: String
+}
+
 type TeamType {
   id: String!
   type: String!
   description: String
 }
 
-type Space{
-	id: Int!
+type Space {
+  id: Int!
   level: Int
-	bg_image: String
-	space_items: [SpaceItem]
+  bg_image: String
+  space_items: [SpaceItem]
 }
 
-type SpaceItem{
-	id: String!
+type SpaceItem {
+  id: String!
   level_id: String!
   pos_x: Float
   pos_y: Float
   image: String
+  user: User
 }
 scalar Date
