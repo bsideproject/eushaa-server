@@ -24,6 +24,16 @@ exports.get = async (id) => {
 	});
 	return user;
 };
+
+exports.checkUserName = async name => {
+	const cnt = await User.count({
+		where: {
+			name
+		}
+	})
+	return cnt
+}
+
 exports.update = async (id, updateData) => {
 	if (updateData.type) {
 		updateData = await insertUserType(updateData);
