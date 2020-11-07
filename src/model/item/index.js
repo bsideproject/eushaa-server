@@ -1,11 +1,11 @@
-const { Todos, Items } = require('../../../db/models');
+const { TodoItem } = require('../../../db/models');
 
 const { styleHyphenFormat } = require('../../lib/util')
 
-exports.insert = async ({ todoId, content }) => {
+exports.insert = async ({ todoListId, content }) => {
 
-    const item = await Items.create({
-        todo_id: todoId,
+    const item = await TodoItem.create({
+        todo_id: todoListId,
         content
     })
     return item.dataValues;
@@ -19,7 +19,9 @@ exports.update = async (id, updateData) => {
             acc[k] = v
             return acc;
         }, {})
-    const [result, item] = await Items.update(updateData, { where: { id } })
+    updateData.content ? updateData.updated_at = new Date().toISOString() : void 0
+    updateData.is_complete === 'Y' ? updateData.completed_at = new Date().toISOString() : void 0
+    const [result, item] = await TodoItem.update(updateData, { where: { id } })
     return result;
 }
 
@@ -41,7 +43,7 @@ exports.update = async (id, updateData) => {
 
 exports.getItems = async todo_id => {
     try {
-        const items = await Items.findAll({
+        const items = await TodoItem.findAll({
             where: {
                 todo_id
             }
@@ -49,26 +51,27 @@ exports.getItems = async todo_id => {
         return items;
     } catch (err) {
         console.error(err);
+        return null
     }
 }
 
-exports.getTodoItems = async (user_id, title) => {
-    try {
-        const items = await Items.findAll({
-            include: {
-                model: Todos,
-                where: { user_id, title },
-            },
-        })
-        return items
-    } catch (err) {
-        console.error(err)
-    }
-}
+// exports.getTodoItems = async (user_id, title) => {
+//     try {
+//         const items = await Items.findAll({
+//             include: {
+//                 model: Todos,
+//                 where: { user_id, title },
+//             },
+//         })
+//         return items
+//     } catch (err) {
+//         console.error(err)
+//     }
+// }
 
 exports.removeItem = async id => {
     try {
-        const result = await Items.destroy({
+        const result = await TodoItem.destroy({
             where: {
                 id
             }
@@ -76,12 +79,13 @@ exports.removeItem = async id => {
         return result
     } catch (err) {
         console.error(err)
+        return false
     }
 }
 
 exports.removeItemsAll = async todo_id => {
     try {
-        const result = await Items.destroy({
+        const result = await TodoItem.destroy({
             where: {
                 todo_id
             }
@@ -89,5 +93,6 @@ exports.removeItemsAll = async todo_id => {
         return result
     } catch (err) {
         console.error(err)
+        return false
     }
 }

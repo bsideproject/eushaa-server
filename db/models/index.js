@@ -52,7 +52,7 @@ db.Sequelize = Sequelize;
 //db.Todos.hasMany(db.Items, { foreignKey: 'todo_id', sourceKey: 'id' });
 //db.Items.belongsTo(db.Todos, { foreignKey: 'todo_id', targetKey: 'id' });
 
-db.User.hasMany(db.Todos, { foreignKey: 'user_id', sourceKey: 'id' });
+db.User.hasMany(db.TodoList, { foreignKey: 'user_id', sourceKey: 'id' });
 db.User.belongsTo(db.Teams, { foreignKey: 'team_id', targetKey: 'id' });
 db.User.hasMany(db.SpaceItemLog, { foreignKey: 'user_id', sourceKey: 'id' });
 db.User.belongsTo(db.UserTypes, {  foreignKey: 'user_type_id', sourceKey: 'id' });
