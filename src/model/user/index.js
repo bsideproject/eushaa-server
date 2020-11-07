@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 
-const { User, UserTypes } = require('../../../db/models');
+const { User, UserTypes, Teams } = require('../../../db/models');
 const { styleHyphenFormat } = require('../../lib/util')
 
 const insertUserType = async (oldObj)=>{
@@ -16,6 +16,16 @@ const insertUserType = async (oldObj)=>{
 
 exports.get = async (id) => {
     const user = await User.findOne({
+		include: [
+			{
+				model: UserTypes,
+				as: 'user_type'
+			},
+			{
+				model: Teams,
+				as: 'team'
+			}
+		],
 		where:{
 			id
 		}
