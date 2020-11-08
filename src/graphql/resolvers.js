@@ -59,7 +59,7 @@ const resolvers = {
 			month = month < 10 ? '0' + month : month;
 			let day = today.getDate();
 			day = day >= 10 ? day : '0' + day;
-			const title = today.getFullYear() + '/' + month + '/' + day;
+			const title = today.getFullYear() + '-' + month + '-' + day;
 			return todo.getTodo(user.id, title);
 		},
 		team: (user) => {
