@@ -27,6 +27,8 @@ type Mutation {
 	addTodoItem(todoListId: Int!, content: String): TodoItem!
 	updateTodoItem(id: Int!, content: String, isComplete: Status): Int!
 	deleteTodoItem(id: Int!): Int!
+	
+	setTodoItems(todoListId: Int!, addContents: [String], removeIdList: [Int]): Int!
 
 	spaceItemLog(teamId: Int!, userId: Int!, itemId: Int!): SpaceItemLog
 

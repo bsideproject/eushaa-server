@@ -41,6 +41,23 @@ const resolvers = {
 		updateTodoItem: (_, { id, content, isComplete }) =>
 			item.update(id, { content, isComplete }),
 		deleteTodoItem: (_, { id }) => item.removeItem(id),
+        
+		setTodoItems: (_, { todoListId, addContents, removeIdList }) => {
+			let errorCnt = 0
+			if (addContents && addContents.length > 0) {
+				item.insertList({ todoListId, addContents }).then(result => {
+					result ? void 0 : errorCnt += 1
+				})
+			}
+			if (removeIdList && removeIdList.length > 0) {
+				item.removeItems({ todoListId, removeIdList }).then(result => {
+					result ? void 0 : errorCnt += 1
+				})
+			}
+			if (errorCnt === 0)
+				return true
+			return false
+		},
 
 		//space item log
 		spaceItemLog: (_, { teamId, userId, itemId }) =>
