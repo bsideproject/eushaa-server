@@ -13,9 +13,9 @@ type Query {
 
   level(levelNumber: Int!): Levels
 
-  team(id: Int!): Teams
+  team(id: Int!): Team
   members(team_id: Int!): [User!]!
-  teamByUser(user_id: Int!): Teams
+  teamByUser(user_id: Int!): Team
 }
 type Mutation {
   signup(email: String!, name: String!, password: String!): User
@@ -35,10 +35,10 @@ type Mutation {
 
   spaceItemLog(teamId: Int!, userId: Int!, itemId: Int!): SpaceItemLog
 
-  makeTeam(type: String!): Teams!
+  makeTeam(type: String!): Team!
   participateTeam(user_id: Int!, team_id: Int!): Int!
   updateTeam(id: Int!, level: Int, gauge: Int): Int!
-  increaseValues(id: Int!, keys: [String!]!): Teams
+  increaseValues(id: Int!, keys: [String!]!): Team
   deleteTeam(id: Int!): Int!
 }
 type User {
@@ -47,8 +47,8 @@ type User {
   name: String!
   password: String!
   todoList: TodoList
-  team: Teams
-  user_type: UserType
+  team: Team
+  userType: UserType
 }
 type TodoList {
   id: String!
@@ -68,13 +68,13 @@ type TodoItem {
   completed_at: Date
 }
 
-type Teams {
+type Team {
   id: String!
   level: Int
   gauge: Int
   created_at: Date
-  users: [User]
-  team_type: TeamType
+  members: [User]
+  teamType: TeamType
   spaces: [Space]
 }
 
@@ -123,7 +123,7 @@ type Space {
   id: Int!
   level: Int
   bg_image: String
-  space_items: [SpaceItem]
+  SpaceItems: [SpaceItem]
 }
 
 type SpaceItem {
