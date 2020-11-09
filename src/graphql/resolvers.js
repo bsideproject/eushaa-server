@@ -4,10 +4,10 @@ const todo = require('../model/todo')
 const spaceItem = require('../model/space_item')
 
 const level = require('../model/level')
-
 const spaceItemLog = require('../model/space_item_log')
 const team = require('../model/team')
-
+const userType = require('../model/user_type')
+const teamType = require('../model/team_type')
 
 const resolvers = {
     Query: {
@@ -58,23 +58,33 @@ const resolvers = {
         deleteTeam: (_, { id }) => team.removeTeam(id),
 
     },
-
-	  User: {
-			todoList: (user) => {
-				const today = new Date();
-				let month = today.getMonth() + 1;
-				month = month < 10 ? '0' + month : month;
-				let day = today.getDate();
-				day = day >= 10 ? day : '0' + day;
-				const title = today.getFullYear() + '/' + month + '/' + day;
-				return todo.getTodo(user.id, title)
-			},
-		},
-
-	  TodoList: {
-			user: (todoList) => user.get(todoList.user_id),
+    User: {
+        todoList: (user) => {
+			const today = new Date();
+			let month = today.getMonth() + 1;
+			month = month < 10 ? '0' + month : month;
+			let day = today.getDate();
+			day = day >= 10 ? day : '0' + day;
+			const title = today.getFullYear() + '/' + month + '/' + day;
+            return todo.getTodo(user.id, title)
+        },
+        team: (user) => {
+            return team.getTeamByUserId(user.id);
+        },
+        userType: (user) => {
+            return userType.getByUserId(user.id)
+        }
+    },
+    TodoList: {
+		user: (todoList) => user.get(todoList.user_id),
 			todoItems: (todoList) => item.getItems(todoList.id),
-		},
+    },
+    Team: {
+        members: ({id}) => team.getUsersByTeamId(id),
+        teamType: ({id}) => teamType.getByTeamId(id),
+        spaces: ({id}) => spaceItem.getAllSpaceItemsByTeam(id)
+    }
+    
 };
 
 module.exports = resolvers;

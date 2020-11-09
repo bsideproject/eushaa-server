@@ -1,5 +1,4 @@
 type Query {
-
   user(id: Int!): User
 
   login(email: String!, password: String!): String
@@ -14,14 +13,13 @@ type Query {
 
   level(levelNumber: Int!): Levels
 
-  team(id: Int!): Teams
+  team(id: Int!): Team
   members(team_id: Int!): [User!]!
-  teamByUser(user_id: Int!): Teams
-
+  teamByUser(user_id: Int!): Team
 }
 type Mutation {
   signup(email: String!, name: String!, password: String!): User
-  updateUser(id:Int! ,name:String, team_id:Int, type: String): Int!
+  updateUser(id: Int!, name: String, team_id: Int, type: String): Int!
 
   makeTodoList(userId: Int!, title: String): TodoList!
   updateTodoList(id: Int!, title: String, isComplete: Status): Int!
@@ -35,24 +33,22 @@ type Mutation {
   ): Int!
   deleteTodoItem(id: Int!): Int!
 
-
   spaceItemLog(teamId: Int!, userId: Int!, itemId: Int!): SpaceItemLog
 
-  makeTeam(type: String!): Teams!
+  makeTeam(type: String!): Team!
   participateTeam(user_id: Int!, team_id: Int!): Int!
   updateTeam(id: Int!, level: Int, gauge: Int): Int!
-  increaseValues(id: Int!, keys: [String!]!): Teams
+  increaseValues(id: Int!, keys: [String!]!): Team
   deleteTeam(id: Int!): Int!
-
 }
 type User {
   id: String!
   email: String!
   name: String!
   password: String!
-  team_id: String
-  user_type_id: Int
   todoList: TodoList
+  team: Team
+  userType: UserType
 }
 type TodoList {
   id: String!
@@ -72,12 +68,14 @@ type TodoItem {
   completed_at: Date
 }
 
-type Teams {
+type Team {
   id: String!
   level: Int
   gauge: Int
   created_at: Date
-  team_type_id: Int
+  members: [User]
+  teamType: TeamType
+  spaces: [Space]
 }
 
 type Levels {
@@ -109,6 +107,33 @@ type SpaceItemLog {
   created_at: Date
 }
 
+type UserType {
+  id: String!
+  type: String!
+  description: String
+}
+
+type TeamType {
+  id: String!
+  type: String!
+  description: String
+}
+
+type Space {
+  id: Int!
+  level: Int
+  bg_img: String
+  SpaceItems: [SpaceItem]
+}
+
+type SpaceItem {
+  id: String!
+  level_id: String!
+  pos_x: Float
+  pos_y: Float
+  image: String
+  user: User
+}
 scalar Date
 
 enum Status {

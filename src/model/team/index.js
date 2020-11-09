@@ -32,7 +32,7 @@ exports.getTeamByUserId = async user_id => {
 exports.getUsersByTeamId = async team_id => {
 	const users = await User.findAll({
 		include: {
-			model: teams,
+			model: Teams,
 			where: { id: team_id },
 		},
 	})
