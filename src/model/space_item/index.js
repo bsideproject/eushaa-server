@@ -1,4 +1,5 @@
-const { SpaceItems, SpaceItemLog } = require('../../../db/models');
+const { where } = require('sequelize');
+const { SpaceItems, SpaceItemLog, Levels, User, Teams } = require('../../../db/models');
 
 const { styleUpperFormat } = require('../../lib/util')
 
@@ -25,6 +26,49 @@ exports.getSpaceItemsByLevel = async ({ levelId }) => {
         }
     })
     return spaceItems;
+}
+
+exports.getAllSpaceItemsByTeam = async(teamId) => {
+
+    const levels = await Levels.findAll({
+      include:
+        {
+          model:SpaceItems,
+          as: 'space_items',
+          include:[{
+            model: SpaceItemLog,
+            as: 'space_item_logs',
+            include:[{
+                model:Teams,
+                as:'team',
+                where : {
+                    id : teamId
+                },
+                required: false
+            },{
+                model:User,
+                as:'user',
+                required: false
+            }],
+          }]
+        }
+  
+    })
+  
+    const spaces = levels.map((s)=>{
+      s.SpaceItems = s.space_items.map((i)=>{
+        if(i.space_item_logs.length > 0) {
+          i["image"] = i.activate_image
+          i["user"] = i.space_item_logs[0].user
+        }
+        else {
+          i["image"] = i.deactivate_image
+        }
+        return i
+      })
+      return s;
+    })
+    return spaces;
 }
 
 exports.getSpaceItemsByTeam = async ({ teamId, levelId }) => {
