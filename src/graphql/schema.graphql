@@ -4,10 +4,10 @@ type Query {
 
   login(email: String!, password: String!): String
   isLogin(authorization: String!): String
-  todos(user_id: Int!): [Todos!]!
-  todo(user_id: Int!, title: String!): Todos
-  items(todo_id: Int!): [Items!]!
-  todoLists(user_id: Int!, title: String!): [Items!]!
+
+  todoLists(userId: Int!, start: String, count: Int): [TodoList]
+  todoList(userId: Int!, title: String!): TodoList
+  todoItems(todoId: Int!): [TodoItem]
 
   getSpaceItemsByLevel(levelId: Int!): [SpaceItems!]!
   getSpaceItemsByTeam(teamId: Int!, levelId: Int!): [SpaceItems2!]!
@@ -23,18 +23,17 @@ type Mutation {
   signup(email: String!, name: String!, password: String!): User
   updateUser(id:Int! ,name:String, team_id:Int, type: String): Int!
 
-  makeTodo(userId: Int!, title: String): Todos!
-  updateTodo(id: Int!, title: String): Int!
-  deleteTodo(id: Int!): Int!
+  makeTodoList(userId: Int!, title: String): TodoList!
+  updateTodoList(id: Int!, title: String, isComplete: Status): Int!
+  deleteTodoList(id: Int!): Int!
 
-  makeItem(todoId: Int!, content: String): Items!
-  updateItem(
+  addTodoItem(todoListId: Int!, content: String): TodoItem!
+  updateTodoItem(
     id: Int!
     content: String
-    isComplete: Boolean
-    completedAt: String
+    isComplete: Status
   ): Int!
-  deleteItem(id: Int!): Int!
+  deleteTodoItem(id: Int!): Int!
 
 
   spaceItemLog(teamId: Int!, userId: Int!, itemId: Int!): SpaceItemLog
@@ -53,20 +52,23 @@ type User {
   password: String!
   team_id: String
   user_type_id: Int
+  todoList: TodoList
 }
-type Todos {
+type TodoList {
   id: String!
   user_id: String!
+  user: User
   title: String
-  is_complete: String
+  todoItems: [TodoItem]
+  is_complete: Status
   completed_at: Date
 }
-type Items {
+type TodoItem {
   id: String!
   todo_id: String!
   content: String
   updated_at: Date
-  is_complete: String
+  is_complete: Status
   completed_at: Date
 }
 
@@ -108,3 +110,8 @@ type SpaceItemLog {
 }
 
 scalar Date
+
+enum Status {
+  Y
+  N
+}

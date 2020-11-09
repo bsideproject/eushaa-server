@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Todos, { foreignKey: 'todo_id', targetKey: 'id' });
+      this.belongsTo(models.TodoList, { foreignKey: 'todo_id', targetKey: 'id' });
     }
   };
   items.init({
@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: false,
     sequelize,
-    modelName: 'items',
+    modelName: 'todo_item',
+    tableName: 'items',
   });
 
 

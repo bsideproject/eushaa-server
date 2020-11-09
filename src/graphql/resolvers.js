@@ -17,11 +17,10 @@ const resolvers = {
         login: (_, { email, password }) => user.selectUser(email, password),
         isLogin: (_, { authorization }) => user.autheticate(authorization),
 
-        todos: (_, { user_id }) => todo.getTodos(user_id),
-        todo: (_, { user_id, title }) => todo.getTodo(user_id, title),
+        todoLists: (_, { userId, start, count }) => todo.getTodos(userId, start, count),
+        todoList: (_, { userId, title }) => todo.getTodo(userId, title),
 
-        items: (_, { todo_id }) => item.getItems(todo_id),
-        todoLists: (_, { user_id, title }) => item.getTodoItems(user_id, title),
+        todoItems: (_, { todoId }) => item.getItems(todoId),
 
 
         getSpaceItemsByLevel: (_, { levelId }) => spaceItem.getSpaceItemsByLevel({ levelId }),
@@ -41,19 +40,13 @@ const resolvers = {
         signup: (_, { email, name, password }) => user.insertUser(email, name, password),
         updateUser:(_, {id, name, team_id, type}) => user.update(id, {name, team_id, type}),
 
-        makeTodo: (_, { userId, title }) => todo.insert({ userId, title }),
-        updateTodo: (_, { id, title }) => todo.update(id, { title }),
-        deleteTodo: (_, { id }) => {
-            const result = todo.removeTodo(id)
-            if (result) {
-                item.removeItemsAll(id)
-            }
-            return result
-        },
+        makeTodoList: (_, { userId, title }) => todo.insert({ userId, title }),
+        updateTodoList: (_, { id, title, isComplete }) => todo.update(id, { title, isComplete }),
+        deleteTodoList: (_, { id }) => todo.removeTodo(id),
 
-        makeItem: (_, { todoId, content }) => item.insert({ todoId, content }),
-        updateItem: (_, { id, content, isComplete, completedAt }) => item.update(id, { content, isComplete, completedAt }),
-        deleteItem: (_, { id }) => item.removeItem(id),
+        addTodoItem: (_, { todoListId, content }) => item.insert({ todoListId, content }),
+        updateTodoItem: (_, { id, content, isComplete }) => item.update(id, { content, isComplete }),
+        deleteTodoItem: (_, { id }) => item.removeItem(id),
 
         //space item log
         spaceItemLog: (_, { teamId, userId, itemId }) => spaceItemLog.insert({ teamId, userId, itemId }),
@@ -64,7 +57,24 @@ const resolvers = {
         increaseValues: (_, { id, keys }) => team.increase(id, keys),
         deleteTeam: (_, { id }) => team.removeTeam(id),
 
-    }
+    },
+
+	  User: {
+			todoList: (user) => {
+				const today = new Date();
+				let month = today.getMonth() + 1;
+				month = month < 10 ? '0' + month : month;
+				let day = today.getDate();
+				day = day >= 10 ? day : '0' + day;
+				const title = today.getFullYear() + '/' + month + '/' + day;
+				return todo.getTodo(user.id, title)
+			},
+		},
+
+	  TodoList: {
+			user: (todoList) => user.get(todoList.user_id),
+			todoItems: (todoList) => item.getItems(todoList.id),
+		},
 };
 
 module.exports = resolvers;
