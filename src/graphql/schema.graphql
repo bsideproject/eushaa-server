@@ -122,7 +122,7 @@ type TeamType {
 type Space {
   id: Int!
   level: Int
-  bg_image: String
+  bg_img: String
   SpaceItems: [SpaceItem]
 }
 
