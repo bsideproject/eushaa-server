@@ -38,23 +38,12 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-// db.User = require('./user')(sequelize, Sequelize);
-// db.Todos = require('./todos')(sequelize, Sequelize);
-// db.Items = require('./items')(sequelize, Sequelize);
-// db.SpaceItemLog = require('./space_item_log')(sequelize, Sequelize);
-// db.SpaceItems = require('./space_items')(sequelize, Sequelize);
-
-// db.Levels = require('./levels')(sequelize, Sequelize);
-
-// db.spaceItemLogs = require('./space_item_log')(sequelize, Sequelize);
-
-
-//db.Todos.hasMany(db.Items, { foreignKey: 'todo_id', sourceKey: 'id' });
-//db.Items.belongsTo(db.Todos, { foreignKey: 'todo_id', targetKey: 'id' });
-
 db.User.hasMany(db.TodoList, { foreignKey: 'user_id', sourceKey: 'id' });
 db.User.belongsTo(db.Teams, { foreignKey: 'team_id', targetKey: 'id' });
 db.User.hasMany(db.SpaceItemLog, { foreignKey: 'user_id', sourceKey: 'id' });
 db.User.belongsTo(db.UserTypes, {  foreignKey: 'user_type_id', sourceKey: 'id' });
+db.User.belongsTo(db.Characters, {  foreignKey: 'character_id', sourceKey: 'id' });
+db.User.hasMany(db.CharacterLogs, { foreignKey: 'user_id', sourceKey: 'id' });
+db.User.hasMany(db.CharacterItemLogs, { foreignKey: 'user_id', sourceKey: 'id' });
 
 module.exports = db;
