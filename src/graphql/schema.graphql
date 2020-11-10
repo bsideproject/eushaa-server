@@ -9,7 +9,6 @@ type Query {
   todoItems(todoId: Int!): [TodoItem]
 
   getSpaceItemsByLevel(levelId: Int!): [SpaceItems!]!
-  getSpaceItemsByTeam(teamId: Int!, levelId: Int!): [SpaceItems2!]!
 
   level(levelNumber: Int!): Levels
 
@@ -82,6 +81,7 @@ type Levels {
   id: String!
   level: Int!
   bg_img: String
+  SpaceItems: [SpaceItems]
 }
 
 type SpaceItems {
@@ -92,13 +92,7 @@ type SpaceItems {
   deactivate_image: String
   activate_image: String
 }
-type SpaceItems2 {
-  id: String!
-  level_id: String!
-  pos_x: Float
-  pos_y: Float
-  image: String
-}
+
 type SpaceItemLog {
   id: String!
   team_id: String!

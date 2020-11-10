@@ -24,9 +24,7 @@ const resolvers = {
 
 
         getSpaceItemsByLevel: (_, { levelId }) => spaceItem.getSpaceItemsByLevel({ levelId }),
-        getSpaceItemsByTeam: (_, { teamId, levelId }) => spaceItem.getSpaceItemsByTeam({ teamId, levelId }),
-
-
+      
         level: (_, { levelNumber }) => level.get({ levelNumber }),
 
         team: (_, { id }) => team.get(id),
