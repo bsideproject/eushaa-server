@@ -6,11 +6,11 @@ exports.getByUserId = async user_id => {
         include: {
             model: CharacterItems,
         },
+        attributes: ['is_active']
     })
     items = items.map(item => {
-        let temp = item.character_item
-        temp['is_active'] = item.is_active
-        return temp
+        item.character_item.is_active = item.is_active
+        return item.character_item
     })
     return items
 }

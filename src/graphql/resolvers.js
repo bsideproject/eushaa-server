@@ -78,6 +78,12 @@ const resolvers = {
         },
         userType: (user) => {
             return userType.getByUserId(user.id)
+        },
+        character: (user) => {
+            return character.getById(user.character_id)
+        },
+        characterItems: (user) => {
+            return characterItem.getByUserId(user.id)
         }
     },
     TodoList: {

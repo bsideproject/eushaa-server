@@ -51,6 +51,8 @@ type User {
   todoList: TodoList
   team: Team
   userType: UserType
+  character: Character
+  characterItems: [CharacterItem]
 }
 type TodoList {
   id: String!
@@ -131,6 +133,20 @@ type SpaceItem {
   image: String
   user: User
 }
+
+type Character {
+  id: String!
+  image: String
+}
+
+type CharacterItem {
+  id: String!
+  pos_x: Float
+  pos_y: Float
+  image: String
+  is_active: Status
+}
+
 scalar Date
 
 enum Status {
