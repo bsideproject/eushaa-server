@@ -9,6 +9,10 @@ const team = require('../model/team')
 const userType = require('../model/user_type')
 const teamType = require('../model/team_type')
 
+const character = require('../model/character')
+const characterItem = require('../model/character_item')
+const characterItemLog = require('../model/character_item_log')
+
 const resolvers = {
     Query: {
 
