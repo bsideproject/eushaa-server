@@ -37,6 +37,7 @@ const resolvers = {
 
         signup: (_, { email, name, password }) => user.insertUser(email, name, password),
         updateUser:(_, {id, name, team_id, type}) => user.update(id, {name, team_id, type}),
+        matchTeam: (_, {userId, type}) => user.matchTeam(userId, type),
 
         makeTodoList: (_, { userId, title }) => todo.insert({ userId, title }),
         updateTodoList: (_, { id, title, isComplete }) => todo.update(id, { title, isComplete }),
@@ -49,6 +50,7 @@ const resolvers = {
         //space item log
         spaceItemLog: (_, { teamId, userId, itemId }) => spaceItemLog.insert({ teamId, userId, itemId }),
 
+        
         makeTeam: (_,{type}) => team.insert(type),
         participateTeam: (_, { user_id, team_id }) => user.participateTeam(user_id, team_id),
         updateTeam: (_, { id, level, gauge }) => team.update(id, { level, gauge }),

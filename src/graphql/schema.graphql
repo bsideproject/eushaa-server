@@ -19,6 +19,7 @@ type Query {
 type Mutation {
   signup(email: String!, name: String!, password: String!): User
   updateUser(id: Int!, name: String, team_id: Int, type: String): Int!
+  matchTeam(userId: Int!, type: String!): User
 
   makeTodoList(userId: Int!, title: String): TodoList!
   updateTodoList(id: Int!, title: String, isComplete: Status): Int!
