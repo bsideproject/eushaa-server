@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+        this.belongsTo(models.CharacterItems, { foreignKey: 'character_item_id', sourceKey: 'id' });
     }
   };
   characterItemLogs.init({
