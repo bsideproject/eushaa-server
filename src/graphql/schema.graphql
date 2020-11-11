@@ -39,6 +39,9 @@ type Mutation {
   updateTeam(id: Int!, level: Int, gauge: Int): Int!
   increaseValues(id: Int!, keys: [String!]!): Team
   deleteTeam(id: Int!): Int!
+
+  characterItemLog(userId: Int!, characterItemId: Int!): Int!
+  setCharacterItem(userId: Int!, characterItemId: Int!, isActive: Status!): Int!
 }
 type User {
   id: String!

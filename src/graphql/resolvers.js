@@ -59,6 +59,9 @@ const resolvers = {
         increaseValues: (_, { id, keys }) => team.increase(id, keys),
         deleteTeam: (_, { id }) => team.removeTeam(id),
 
+        characterItemLog: (_, { userId, characterItemId }) => characterItemLog.insert(userId, characterItemId),
+        setCharacterItem: (_, { userId, characterItemId, isActive }) => characterItemLog.setActive(userId, characterItemId, isActive),
+
     },
     User: {
         todoList: (user) => {
