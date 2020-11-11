@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   characterItemLogs.init({
+    is_active: DataTypes.ENUM('Y', 'N'),
   }, {
     timestamps: true,
     sequelize,
