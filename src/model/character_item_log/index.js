@@ -2,12 +2,13 @@ const { CharacterItemLogs } = require('../../../db/models');
 
 exports.insert = async (user_id, character_item_id) => {    
     try {
-        const log = await CharacterItemLogs.create({
-            is_active: 'N',
-            user_id,
-            character_item_id,
+        const [log, result] = await CharacterItemLogs.findOrCreate({
+            where: {
+                user_id,
+                character_item_id,
+            }
         })
-        return true
+        return result
     } catch (err) {
         console.error(err)
         return false
