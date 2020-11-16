@@ -33,7 +33,12 @@ const resolvers = {
 		signup: (_, { email, name, password }) => user.insertUser(email, name, password),
 		updateUser: (_, { id, name, team_id, type }) => user.update(id, { name, team_id, type }),
 
-		makeTodoList: (_, { userId, title }) => todo.insert({ userId, title }),
+		makeTodoList: (_, { userId, title }) => {
+			if (!/^\d{4}-\d{2}-\d{2}$/.test(title)) {
+				throw new Error("입력 값이 올바른 형식이 아닙니다.")
+			}
+			return todo.insert({ userId, title })
+		},
 		updateTodoList: (_, { id, title, isComplete }) => todo.update(id, { title, isComplete }),
 		deleteTodoList: (_, { id }) => todo.removeTodo(id),
 
