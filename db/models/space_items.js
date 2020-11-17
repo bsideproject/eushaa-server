@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 	spaceItems.init(
 		{
 			level_id: { type: DataTypes.INTEGER, allowNull: false },
+			name: { type: DataTypes.STRING(127), unique: true },
 			pos_x: DataTypes.FLOAT,
 			pos_y: DataTypes.FLOAT,
 			deactivate_image: DataTypes.STRING(255),

@@ -82,6 +82,7 @@ type Levels {
 
 type SpaceItems {
 	id: String!
+	name: String!
 	level_id: String!
 	pos_x: Float
 	pos_y: Float
