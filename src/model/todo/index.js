@@ -6,11 +6,13 @@ const {
 const { styleHyphenFormat } = require('../../lib/util');
 
 exports.insert = async ({ userId, title }) => {
-	const todo = await TodoList.create({
-		user_id: userId,
-		title,
+	const [todo, result] = await TodoList.findOrCreate({
+		where: {
+			user_id: userId,
+			title,
+		}
 	});
-	return todo.dataValues;
+	return todo;
 };
 
 exports.update = async (id, updateData) => {

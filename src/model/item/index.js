@@ -10,6 +10,22 @@ exports.insert = async ({ todoListId, content }) => {
 	return item.dataValues;
 };
 
+exports.insertList = async({ todoListId, addContents }) => {
+	
+	try {
+        let records = addContents.map(content => ({
+            todo_id: todoListId,
+            content
+        }))
+
+        const result = await TodoItem.bulkCreate(records)
+        return true
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+}
+
 exports.update = async (id, updateData) => {
 	updateData = Object.entries(updateData)
 		.filter(([k, v]) => v)
@@ -81,6 +97,18 @@ exports.removeItem = async (id) => {
 		return false;
 	}
 };
+
+exports.removeItems = async ({ todoListId, removeIdList }) => {
+    try {
+        const result = await TodoItem.destroy({
+            where: { todo_id: todoListId, id: removeIdList }
+        })
+        return true
+    } catch (err) {
+        console.error(err)
+        return false
+    }
+}
 
 exports.removeItemsAll = async (todo_id) => {
 	try {

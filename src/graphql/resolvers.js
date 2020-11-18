@@ -40,9 +40,30 @@ const resolvers = {
         updateUser:(_, {id, name, team_id, type}) => user.update(id, {name, team_id, type}),
         matchTeam: (_, {userId, type}) => user.matchTeam(userId, type),
 
-        makeTodoList: (_, { userId, title }) => todo.insert({ userId, title }),
+        makeTodoList: (_, { userId, title }) => {
+			if (!/^\d{4}-\d{2}-\d{2}$/.test(title)) {
+				throw new Error("입력 값이 올바른 형식이 아닙니다.")
+			}
+			return todo.insert({ userId, title })
+		},
         updateTodoList: (_, { id, title, isComplete }) => todo.update(id, { title, isComplete }),
         deleteTodoList: (_, { id }) => todo.removeTodo(id),
+          setTodoItems: (_, { todoListId, addContents, removeIdList }) => {
+			let errorCnt = 0
+			if (addContents && addContents.length > 0) {
+				item.insertList({ todoListId, addContents }).then(result => {
+					result ? void 0 : errorCnt += 1
+				})
+			}
+			if (removeIdList && removeIdList.length > 0) {
+				item.removeItems({ todoListId, removeIdList }).then(result => {
+					result ? void 0 : errorCnt += 1
+				})
+			}
+			if (errorCnt === 0)
+				return true
+			return false
+		},
 
         addTodoItem: (_, { todoListId, content }) => item.insert({ todoListId, content }),
         updateTodoItem: (_, { id, content, isComplete }) => item.update(id, { content, isComplete }),
@@ -66,7 +87,7 @@ const resolvers = {
 			month = month < 10 ? '0' + month : month;
 			let day = today.getDate();
 			day = day >= 10 ? day : '0' + day;
-			const title = today.getFullYear() + '/' + month + '/' + day;
+			const title = today.getFullYear() + '-' + month + '-' + day;
 			return todo.getTodo(user.id, title);
 		},
 		team: (user) => {
