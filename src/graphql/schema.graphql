@@ -17,24 +17,31 @@ type Query {
 	teamByUser(user_id: Int!): Team
 }
 type Mutation {
-	signup(email: String!, name: String!, password: String!): User
-	updateUser(id: Int!, name: String, team_id: Int, type: String): Int!
 
-	makeTodoList(userId: Int!, title: String): TodoList!
-	updateTodoList(id: Int!, title: String, isComplete: Status): Int!
-	deleteTodoList(id: Int!): Int!
+  signup(email: String!, name: String!, password: String!): User
+  updateUser(id: Int!, name: String, team_id: Int, type: String): Int!
+  matchTeam(userId: Int!, type: String!): User
 
-	addTodoItem(todoListId: Int!, content: String): TodoItem!
-	updateTodoItem(id: Int!, content: String, isComplete: Status): Int!
-	deleteTodoItem(id: Int!): Int!
+  makeTodoList(userId: Int!, title: String): TodoList!
+  updateTodoList(id: Int!, title: String, isComplete: Status): Int!
+  deleteTodoList(id: Int!): Int!
 
-	spaceItemLog(teamId: Int!, userId: Int!, itemId: Int!): SpaceItemLog
+  addTodoItem(todoListId: Int!, content: String): TodoItem!
+  updateTodoItem(
+    id: Int!
+    content: String
+    isComplete: Status
+  ): Int!
+  deleteTodoItem(id: Int!): Int!
 
-	makeTeam(type: String!): Team!
-	participateTeam(user_id: Int!, team_id: Int!): Int!
-	updateTeam(id: Int!, level: Int, gauge: Int): Int!
-	increaseValues(id: Int!, keys: [String!]!): Team
-	deleteTeam(id: Int!): Int!
+  spaceItemLog(teamId: Int!, userId: Int!, itemId: Int!): SpaceItemLog
+
+  makeTeam(type: String!): Team!
+  participateTeam(user_id: Int!, team_id: Int!): Int!
+  updateTeam(id: Int!, level: Int, gauge: Int): Int!
+  increaseValues(id: Int!, keys: [String!]!): Team
+  deleteTeam(id: Int!): Int!
+
 }
 type User {
 	id: String!
