@@ -1,22 +1,23 @@
 type Query {
-  user(id: Int!): User
+	user(id: Int!): User
 
-  login(email: String!, password: String!): String
-  isLogin(authorization: String!): String
+	login(email: String!, password: String!): String
+	isLogin(authorization: String!): String
 
-  todoLists(userId: Int!, start: String, count: Int): [TodoList]
-  todoList(userId: Int!, title: String!): TodoList
-  todoItems(todoId: Int!): [TodoItem]
+	todoLists(userId: Int!, start: String, count: Int): [TodoList]
+	todoList(userId: Int!, title: String!): TodoList
+	todoItems(todoId: Int!): [TodoItem]
 
-  getSpaceItemsByLevel(levelId: Int!): [SpaceItems!]!
+	getSpaceItemsByLevel(levelId: Int!): [SpaceItems!]!
 
-  level(levelNumber: Int!): Levels
+	level(levelNumber: Int!): Levels
 
-  team(id: Int!): Team
-  members(team_id: Int!): [User!]!
-  teamByUser(user_id: Int!): Team
+	team(id: Int!): Team
+	members(team_id: Int!): [User!]!
+	teamByUser(user_id: Int!): Team
 }
 type Mutation {
+
   signup(email: String!, name: String!, password: String!): User
   updateUser(id: Int!, name: String, team_id: Int, type: String): Int!
   matchTeam(userId: Int!, type: String!): User
@@ -40,98 +41,99 @@ type Mutation {
   updateTeam(id: Int!, level: Int, gauge: Int): Int!
   increaseValues(id: Int!, keys: [String!]!): Team
   deleteTeam(id: Int!): Int!
+
 }
 type User {
-  id: String!
-  email: String!
-  name: String!
-  password: String!
-  todoList: TodoList
-  team: Team
-  userType: UserType
+	id: String!
+	email: String!
+	name: String!
+	password: String!
+	todoList: TodoList
+	team: Team
+	userType: UserType
 }
 type TodoList {
-  id: String!
-  user_id: String!
-  user: User
-  title: String
-  todoItems: [TodoItem]
-  is_complete: Status
-  completed_at: Date
+	id: String!
+	user_id: String!
+	user: User
+	title: String
+	todoItems: [TodoItem]
+	is_complete: Status
+	completed_at: Date
 }
 type TodoItem {
-  id: String!
-  todo_id: String!
-  content: String
-  updated_at: Date
-  is_complete: Status
-  completed_at: Date
+	id: String!
+	todo_id: String!
+	content: String
+	updated_at: Date
+	is_complete: Status
+	completed_at: Date
 }
 
 type Team {
-  id: String!
-  level: Int
-  gauge: Int
-  created_at: Date
-  members: [User]
-  teamType: TeamType
-  spaces: [Space]
+	id: String!
+	level: Int
+	gauge: Int
+	created_at: Date
+	members: [User]
+	teamType: TeamType
+	spaces: [Space]
 }
 
 type Levels {
-  id: String!
-  level: Int!
-  bg_img: String
-  SpaceItems: [SpaceItems]
+	id: String!
+	level: Int!
+	bg_img: String
+	SpaceItems: [SpaceItems]
 }
 
 type SpaceItems {
-  id: String!
-  level_id: String!
-  pos_x: Float
-  pos_y: Float
-  deactivate_image: String
-  activate_image: String
+	id: String!
+	level_id: String!
+	pos_x: Float
+	pos_y: Float
+	deactivate_image: String
+	activate_image: String
 }
 
 type SpaceItemLog {
-  id: String!
-  team_id: String!
-  item_id: String!
-  user_id: String!
-  created_at: Date
+	id: String!
+	team_id: String!
+	item_id: String!
+	user_id: String!
+	created_at: Date
 }
 
 type UserType {
-  id: String!
-  type: String!
-  description: String
+	id: String!
+	type: String!
+	description: String
 }
 
 type TeamType {
-  id: String!
-  type: String!
-  description: String
+	id: String!
+	type: String!
+	description: String
 }
 
 type Space {
-  id: Int!
-  level: Int
-  bg_img: String
-  SpaceItems: [SpaceItem]
+	id: Int!
+	level: Int
+	bg_img: String
+	SpaceItems: [SpaceItem]
 }
 
 type SpaceItem {
-  id: String!
-  level_id: String!
-  pos_x: Float
-  pos_y: Float
-  image: String
-  user: User
+	id: String!
+	level_id: String!
+	pos_x: Float
+	pos_y: Float
+	image: String
+	user: User
 }
 scalar Date
 
 enum Status {
-  Y
-  N
+	Y
+	N
 }
