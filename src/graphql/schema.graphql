@@ -44,7 +44,7 @@ type User {
 	email: String!
 	name: String!
 	password: String!
-	todoList: TodoList
+	todoList: [TodoList]
 	team: Team
 	userType: UserType
 }
