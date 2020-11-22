@@ -88,7 +88,7 @@ const resolvers = {
 			let day = today.getDate();
 			day = day >= 10 ? day : '0' + day;
 			const title = today.getFullYear() + '-' + month + '-' + day;
-			return todo.getTodos(user.id, title);
+			return todo.getTodos(user.id);
 		},
 		team: (user) => {
 			return team.getTeamByUserId(user.id);
