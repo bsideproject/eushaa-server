@@ -8,6 +8,7 @@ const spaceItemLog = require('../model/space_item_log');
 const team = require('../model/team');
 const userType = require('../model/user_type');
 const teamType = require('../model/team_type');
+const character = require('../model/character')
 
 const resolvers = {
 
@@ -96,6 +97,12 @@ const resolvers = {
 		userType: (user) => {
 			return userType.getByUserId(user.id);
 		},
+		character: (user) => {
+			return character.getByUserId(user.id);
+		},
+		characterLogs: (user) => {
+			return character.getLogsByUserId(user.id);
+		}
 	},
 	TodoList: {
 		user: (todoList) => user.get(todoList.user_id),
