@@ -43,7 +43,7 @@ db.User.belongsTo(db.Teams, { foreignKey: 'team_id', targetKey: 'id' });
 db.User.hasMany(db.SpaceItemLog, { foreignKey: 'user_id', sourceKey: 'id' });
 db.User.belongsTo(db.UserTypes, { foreignKey: 'user_type_id', sourceKey: 'id' });
 db.User.belongsTo(db.Characters, { foreignKey: 'character_id', sourceKey: 'id' });
-db.User.hasMany(db.CharacterLogs, { foreignKey: 'user_id', sourceKey: 'id' });
+db.User.hasMany(db.UserCharacterLogs, { foreignKey: 'user_id', sourceKey: 'id' });
 db.User.hasMany(db.CharacterItemLogs, { foreignKey: 'user_id', sourceKey: 'id' });
 
 

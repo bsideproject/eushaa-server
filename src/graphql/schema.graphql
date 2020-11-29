@@ -43,10 +43,24 @@ type User {
 	id: String!
 	email: String!
 	name: String!
-	password: String!
-	todoList: TodoList
+	password: String
+	todoList: [TodoList]
 	team: Team
 	userType: UserType
+	character: Character
+	characterLogs: [Character]
+}
+type Character {
+	id: String!
+	image: String!
+	characterItems: [CharacterItem]
+}
+type CharacterItem {
+	id: String!
+	image: String!
+	is_active: Status!
+	pos_x: Float!
+	pos_y: Float!
 }
 type TodoList {
 	id: String!
