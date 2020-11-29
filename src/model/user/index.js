@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 
-const { User, UserTypes, Teams ,Sequelize:{Sequelize,Op}} = require('../../../db/models');
+const { User, UserTypes, Teams, Sequelize: { Sequelize, Op } } = require('../../../db/models');
 const { styleHyphenFormat } = require('../../lib/util')
 
 
@@ -15,6 +15,16 @@ const insertUserType = async (oldObj) => {
 	delete newObj.type;
 	return newObj;
 };
+
+const isUniqueName = async (name) => {
+	const user = await User.findOne({
+		where: {
+			name
+		}
+	})
+	if (!user) return true;
+	return false
+}
 
 exports.get = async (id) => {
 	const user = await User.findOne({
@@ -42,6 +52,8 @@ exports.update = async (id, updateData) => {
 exports.insertUser = async (email, name, password) => {
 	const salt = bcrypt.genSaltSync(saltRounds);
 	const hashedPassword = bcrypt.hashSync(password, salt);
+
+	if (!await isUniqueName(name)) throw new Error("중복된 닉네임 입니다.")
 
 	const user = await User.create({
 		email,
@@ -86,16 +98,16 @@ exports.autheticate = (authorization) => {
 	}
 };
 
-exports.participateTeam = async(user_id, team_id) => {
-  const [result, user] = await User.update({ team_id }, { where: { id: user_id } })
-  return result
+exports.participateTeam = async (user_id, team_id) => {
+	const [result, user] = await User.update({ team_id }, { where: { id: user_id } })
+	return result
 }
 
-exports.matchTeam = async(id, type) =>{
+exports.matchTeam = async (id, type) => {
 
 	const team = await Teams.findOne({
 		attributes: {
-			include:[
+			include: [
 				[
 					Sequelize.literal(`(
 						SELECT COUNT(u.id)
@@ -115,7 +127,7 @@ exports.matchTeam = async(id, type) =>{
 	})
 
 	const user = await User.findOne({
-		where:{
+		where: {
 			id
 		}
 	})
