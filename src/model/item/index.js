@@ -10,23 +10,24 @@ exports.insert = async ({ todoListId, content }) => {
 	return item.dataValues;
 };
 
-exports.insertList = async({ todoListId, addContents }) => {
-	
-	try {
-        let records = addContents.map(content => ({
-            todo_id: todoListId,
-            content
-        }))
+exports.insertList = async ({ todoListId, addContents }) => {
 
-        const result = await TodoItem.bulkCreate(records)
-        return true
-    } catch (err) {
-        console.log(err)
-        return false
-    }
+	try {
+		let records = addContents.map(content => ({
+			todo_id: todoListId,
+			content
+		}))
+
+		const result = await TodoItem.bulkCreate(records)
+		return true
+	} catch (err) {
+		console.log(err)
+		return false
+	}
 }
 
 exports.update = async (id, updateData) => {
+
 	updateData = Object.entries(updateData)
 		.filter(([k, v]) => v)
 		.map(([k, v]) => [styleHyphenFormat(k), v])
@@ -36,8 +37,13 @@ exports.update = async (id, updateData) => {
 		}, {});
 	updateData.content ? (updateData.updated_at = new Date().toISOString()) : void 0;
 	updateData.is_complete === 'Y' ? (updateData.completed_at = new Date().toISOString()) : void 0;
-	const [result, item] = await TodoItem.update(updateData, { where: { id } });
-	return result;
+
+
+	const [result] = await TodoItem.update(updateData, { where: { id } });
+
+	const todoItem = result === 1 ? await TodoItem.findOne({ where: { id } }) : null;
+
+	return todoItem
 };
 
 // exports.updateContent = async ({ id, content }) => {
@@ -99,15 +105,15 @@ exports.removeItem = async (id) => {
 };
 
 exports.removeItems = async ({ todoListId, removeIdList }) => {
-    try {
-        const result = await TodoItem.destroy({
-            where: { todo_id: todoListId, id: removeIdList }
-        })
-        return true
-    } catch (err) {
-        console.error(err)
-        return false
-    }
+	try {
+		const result = await TodoItem.destroy({
+			where: { todo_id: todoListId, id: removeIdList }
+		})
+		return true
+	} catch (err) {
+		console.error(err)
+		return false
+	}
 }
 
 exports.removeItemsAll = async (todo_id) => {
