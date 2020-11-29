@@ -48,7 +48,7 @@ type User {
 	team: Team
 	userType: UserType
 	character: Character
-	characterLogs: [Character]
+	characterLogs(count: Int): [Character]
 }
 type Character {
 	id: String!

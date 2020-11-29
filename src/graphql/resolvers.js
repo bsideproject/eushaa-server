@@ -100,8 +100,8 @@ const resolvers = {
 		character: (user) => {
 			return character.getByUserId(user.id);
 		},
-		characterLogs: (user) => {
-			return character.getLogsByUserId(user.id);
+		characterLogs: (user, { count }, _) => {
+			return character.getLogsByUserId(user.id, count);
 		}
 	},
 	TodoList: {
