@@ -22,7 +22,7 @@ type Mutation {
 	matchTeam(userId: Int!, type: String!): User
 
 	addTodoItem(todoListId: Int!, content: String): TodoItem!
-	updateTodoItem(id: Int!, content: String, isComplete: Status): Int!
+	updateTodoItem(id: Int!, content: String, isComplete: Status): TodoItem
 	deleteTodoItem(id: Int!): Int!
 
 	setTodoItems(todoListId: Int!, addContents: [String], removeIdList: [Int]): Int!
