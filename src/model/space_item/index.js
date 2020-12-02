@@ -1,4 +1,3 @@
-const { where } = require('sequelize');
 const { SpaceItems, SpaceItemLog, Levels, User, Teams } = require('../../../db/models');
 
 const { styleUpperFormat } = require('../../lib/util');
