@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 
-const { User, UserTypes, Teams, Sequelize: { Sequelize, Op } } = require('../../../db/models');
+const { User, UserTypes, Teams, TeamTypes, Sequelize: { Sequelize, Op } } = require('../../../db/models');
 const { styleHyphenFormat } = require('../../lib/util')
 
 
@@ -34,6 +34,43 @@ const isUniqueEmail = async (email) => {
 	})
 	if (!user) return true;
 	return false
+}
+
+
+const matchTeam = async (type) => {
+	type = type.slice(0, 2)
+	const team = await Teams.findOne({
+		attributes: {
+			include: [
+				[
+					Sequelize.literal(`(
+						SELECT COUNT(u.id)
+						FROM users u
+							JOIN teams t ON t.id = u.team_id
+							JOIN team_types tt ON tt.id = t.team_type_id AND tt.type = '${type}'
+						WHERE t.id = teams.id
+						GROUP BY t.id
+					)`),
+					'userCount'
+				]
+			]
+		},
+		order: [
+			[Sequelize.literal('userCount'), 'ASC']
+		]
+	})
+
+	if (!team.userCount || team.userCount >= 4) {
+		const teamType = await TeamTypes.findOne({
+			where: { type },
+		});
+
+		const newTeam = await Teams.create({
+			team_type_id: teamType.id,
+		})
+		return newTeam
+	}
+	return team
 }
 
 exports.get = async (id) => {
@@ -115,32 +152,14 @@ exports.participateTeam = async (user_id, team_id) => {
 
 exports.matchTeam = async (id, type) => {
 
-	const team = await Teams.findOne({
-		attributes: {
-			include: [
-				[
-					Sequelize.literal(`(
-						SELECT COUNT(u.id)
-						FROM users u
-							JOIN teams t ON t.id = u.team_id
-							JOIN team_types tt ON tt.id = t.team_type_id AND tt.type = '${type.slice(0, 2)}'
-						WHERE t.id = teams.id
-						GROUP BY t.id
-					)`),
-					'userCount'
-				]
-			]
-		},
-		order: [
-			[Sequelize.literal('userCount'), 'ASC']
-		]
-	})
-
 	const user = await User.findOne({
 		where: {
 			id
 		}
 	})
+
+	const team = await matchTeam(type)
+
 	user.team_id = team.id
 	await user.save();
 	return user;
