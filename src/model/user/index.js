@@ -26,6 +26,16 @@ const isUniqueName = async (name) => {
 	return false
 }
 
+const isUniqueEmail = async (email) => {
+	const user = await User.findOne({
+		where: {
+			email
+		}
+	})
+	if (!user) return true;
+	return false
+}
+
 exports.get = async (id) => {
 	const user = await User.findOne({
 		where: {
@@ -51,15 +61,15 @@ exports.update = async (id, updateData) => {
 };
 exports.insertUser = async (email, name, password) => {
 	const salt = bcrypt.genSaltSync(saltRounds);
-	const hashedPassword = bcrypt.hashSync(password, salt);
 
 	if (!await isUniqueName(name)) throw new Error("중복된 닉네임 입니다.")
-
+	if (!await isUniqueEmail(email)) throw new Error("중복된 이메일 입니다.")
 	const user = await User.create({
 		email,
 		name,
-		password: hashedPassword,
+		password: password ? bcrypt.hashSync(password, salt) : null,
 	});
+
 	return user;
 };
 
