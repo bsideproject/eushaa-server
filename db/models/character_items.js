@@ -17,7 +17,9 @@ module.exports = (sequelize, DataTypes) => {
   characterItems.init({
     pos_x: DataTypes.FLOAT,
     pos_y: DataTypes.FLOAT,
-    image: DataTypes.STRING(255)
+    activate_image: DataTypes.STRING(255),
+    deactivate_image: DataTypes.STRING(255),
+    name: { type: DataTypes.STRING(127), unique: true },
   }, {
     timestamps: false,
     sequelize,
