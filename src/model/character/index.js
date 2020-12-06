@@ -24,7 +24,12 @@ exports.getByUserId = async (userId) => {
     });
 
     character["characterItems"] = characterItems.map((c) => {
-        return { ...c.dataValues, is_active: c.character_item_logs[0].is_active }
+        if (c.character_item_logs[0].is_active === 'Y') {
+            return { ...c.dataValues, image: c.activate_image, is_active: c.character_item_logs[0].is_active }
+        } else {
+            return { ...c.dataValues, image: c.deactivate_image, is_active: c.character_item_logs[0].is_active }
+        }
+
     })
     return character
 }
@@ -49,4 +54,12 @@ exports.getLogsByUserId = async (userId, count = 10) => {
         }
         return character
     })
+}
+
+exports.insertLog = async (userId, itemId) => {
+    const characterLog = await UserCharacterLogs.create({
+        user_id: userId,
+        character_item_id: itemId
+    })
+    return characterLog
 }
