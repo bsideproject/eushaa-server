@@ -10,6 +10,7 @@ const userType = require('../model/user_type');
 const teamType = require('../model/team_type');
 const character = require('../model/character')
 
+
 const resolvers = {
 
 	Query: {
@@ -41,6 +42,7 @@ const resolvers = {
 		updateUser: (_, { id, name, team_id, type }) => user.update(id, { name, team_id, type }),
 		matchTeam: (_, { userId, type }) => user.matchTeam(userId, type),
 
+
 		makeTodoList: (_, { userId, title }) => {
 			if (!/^\d{4}-\d{2}-\d{2}$/.test(title)) {
 				throw new Error("입력 값이 올바른 형식이 아닙니다.")
@@ -71,8 +73,8 @@ const resolvers = {
 		deleteTodoItem: (_, { id }) => item.removeItem(id),
 
 		//space item log
-		spaceItemLog: (_, { teamId, userId, itemId }) => spaceItemLog.insert({ teamId, userId, itemId }),
-
+		addSpaceItemLog: (_, { teamId, userId, itemId }) => spaceItemLog.insert({ teamId, userId, itemId }),
+		addCharacterItem: (_, { userId, itemId }) => character.insertLog({ userId, itemId }),
 
 		makeTeam: (_, { type }) => team.insert(type),
 		participateTeam: (_, { user_id, team_id }) => user.participateTeam(user_id, team_id),
