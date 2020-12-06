@@ -58,6 +58,7 @@ type Character {
 }
 type CharacterItem {
 	id: String!
+	name: String!
 	image: String!
 	is_active: Status!
 	pos_x: Float!
