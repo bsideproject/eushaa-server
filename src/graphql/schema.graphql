@@ -31,7 +31,8 @@ type Mutation {
 	updateTodoList(id: Int!, title: String, isComplete: Status): Int!
 	deleteTodoList(id: Int!): Int!
 
-	spaceItemLog(teamId: Int!, userId: Int!, itemId: Int!): SpaceItemLog
+	addSpaceItemLog(teamId: Int!, userId: Int!, itemId: Int!): SpaceItemLog
+	addCharacterItem(userId: Int!, itemId: Int!): CharacterItemLog
 
 	makeTeam(type: String!): Team!
 	participateTeam(user_id: Int!, team_id: Int!): Int!
@@ -112,6 +113,14 @@ type SpaceItemLog {
 	team_id: String!
 	item_id: String!
 	user_id: String!
+	created_at: Date
+}
+
+type CharacterItemLog {
+	id: String!
+	user_id: String!
+	item_id: String!
+	is_active: Status
 	created_at: Date
 }
 
