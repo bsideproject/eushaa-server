@@ -56,10 +56,11 @@ exports.getLogsByUserId = async (userId, count = 10) => {
     })
 }
 
-exports.insertLog = async (userId, itemId) => {
-    const characterLog = await UserCharacterLogs.create({
+exports.insertLog = async ({ userId, itemId }) => {
+    const characterItemLog = await CharacterItemLogs.create({
         user_id: userId,
         character_item_id: itemId
     })
-    return characterLog
+    return { ...characterItemLog.dataValues, item_id: characterItemLog.character_item_id, created_at: characterItemLog.createdAt }
+
 }
