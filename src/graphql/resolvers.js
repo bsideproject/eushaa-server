@@ -16,6 +16,7 @@ const resolvers = {
 	Query: {
 
 		user: (_, { id }) => user.get(id),
+		userByEmail: (_, { email }) => user.getByEmail(email),
 
 		login: (_, { email, password }) => user.selectUser(email, password),
 		isLogin: (_, { authorization }) => user.autheticate(authorization),

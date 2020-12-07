@@ -81,6 +81,14 @@ exports.get = async (id) => {
 	});
 	return user;
 };
+exports.getByEmail = async (email) => {
+	const user = await User.findOne({
+		where: {
+			email,
+		},
+	});
+	return user;
+}
 exports.update = async (id, updateData) => {
 	if (updateData.type) {
 		updateData = await insertUserType(updateData);

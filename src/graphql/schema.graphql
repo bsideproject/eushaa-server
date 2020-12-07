@@ -1,5 +1,6 @@
 type Query {
 	user(id: Int!): User
+	userByEmail(email: String!): User
 
 	login(email: String!, password: String!): String
 	isLogin(authorization: String!): String
