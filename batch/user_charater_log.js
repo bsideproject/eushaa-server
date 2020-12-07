@@ -23,7 +23,7 @@ const insertLogs = async () => {
             ci.id characterItemId,
             ci.pos_x characterItemPosX,
             ci.pos_y characterItemPosY,
-            ci.image characterItemImage
+            ci.activate_image characterItemImage
         FROM users u
         JOIN (
             SELECT * 
@@ -61,5 +61,3 @@ const j = schedule.scheduleJob('00 59 23 * * 0-6', async () => {
     console.log("do character log batch")
     await insertLogs()
 })
-
-
