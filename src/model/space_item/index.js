@@ -1,4 +1,4 @@
-const { SpaceItems, SpaceItemLog, Levels, User, Teams } = require('../../../db/models');
+const { SpaceItems, SpaceItemLog, Levels, User, Teams, Sequelize: { Op } } = require('../../../db/models');
 
 const { styleUpperFormat } = require('../../lib/util');
 
@@ -39,7 +39,7 @@ exports.getSpaceItemsByLevel = async ({ levelId }) => {
     return spaceItems;
 };
 
-exports.getAllSpaceItemsByTeam = async (teamId) => {
+exports.getAllSpaceItemsByTeam = async ({ teamId, level, gauge }) => {
     const levels = await Levels.findAll({
         include: {
             model: SpaceItems,
@@ -66,9 +66,17 @@ exports.getAllSpaceItemsByTeam = async (teamId) => {
                 },
             ],
         },
+        where: {
+            level: { [Op.lte]: level }
+        }
     });
 
     const spaces = levels.map((s) => {
+
+        if (s.level < level) s.gauge_img = `http://13.125.215.32/images/guages/lv.${s.level}-12.png`
+        else {
+            s.gauge_img = `http://13.125.215.32/images/guages/lv.${s.level}-${gauge}.png`
+        }
         s.SpaceItems = s.space_items.map((i) => {
             if (i.space_item_logs.length > 0) {
                 i['image'] = i.activate_image;
