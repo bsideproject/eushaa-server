@@ -142,6 +142,7 @@ type Space {
 	id: Int!
 	level: Int
 	bg_img: String
+	gauge_img: String
 	SpaceItems: [SpaceItem]
 }
 

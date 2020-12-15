@@ -114,7 +114,7 @@ const resolvers = {
 	Team: {
 		members: ({ id }) => team.getUsersByTeamId(id),
 		teamType: ({ id }) => teamType.getByTeamId(id),
-		spaces: ({ id }) => spaceItem.getAllSpaceItemsByTeam(id),
+		spaces: ({ id, level, gauge }) => spaceItem.getAllSpaceItemsByTeam({ teamId: id, level, gauge }),
 	},
 };
 
