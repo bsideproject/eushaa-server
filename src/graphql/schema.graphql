@@ -35,6 +35,8 @@ type Mutation {
 	addSpaceItemLog(teamId: Int!, userId: Int!, itemId: Int!): SpaceItemLog
 	addCharacterItem(userId: Int!, itemId: Int!): CharacterItemLog
 
+	updateCharacterItemStatus(userId: Int!, itemId: Int!, isActive: Status!): Int
+
 	makeTeam(type: String!): Team!
 	participateTeam(user_id: Int!, team_id: Int!): Int!
 	updateTeam(id: Int!, level: Int, gauge: Int): Int!

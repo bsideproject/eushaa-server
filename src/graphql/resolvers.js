@@ -8,8 +8,7 @@ const spaceItemLog = require('../model/space_item_log');
 const team = require('../model/team');
 const userType = require('../model/user_type');
 const teamType = require('../model/team_type');
-const character = require('../model/character')
-
+const character = require('../model/character');
 
 const resolvers = {
 
@@ -76,6 +75,8 @@ const resolvers = {
 		//space item log
 		addSpaceItemLog: (_, { teamId, userId, itemId }) => spaceItemLog.insert({ teamId, userId, itemId }),
 		addCharacterItem: (_, { userId, itemId }) => character.insertLog({ userId, itemId }),
+
+		updateCharacterItemStatus: (_, { userId, itemId, isActive }) => character.updateCharacterItemStatus({ userId, itemId, isActive }),
 
 		makeTeam: (_, { type }) => team.insert(type),
 		participateTeam: (_, { user_id, team_id }) => user.participateTeam(user_id, team_id),
