@@ -64,3 +64,8 @@ exports.insertLog = async ({ userId, itemId }) => {
     return { ...characterItemLog.dataValues, item_id: characterItemLog.character_item_id, created_at: characterItemLog.createdAt }
 
 }
+
+exports.updateCharacterItemStatus = async ({ userId, itemId, isActive }) => {
+    const [result] = await CharacterItemLogs.update({ is_active: isActive }, { where: { user_id: userId, character_item_id: itemId } });
+    return result;
+}
