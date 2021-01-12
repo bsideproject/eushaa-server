@@ -21,6 +21,7 @@ type Mutation {
 	signup(email: String!, name: String!, password: String): User
 	updateUser(id: Int!, name: String, team_id: Int, type: String): Int!
 	matchTeam(userId: Int!, type: String!): User
+	deleteUser(id: Int!): Int
 
 	addTodoItem(todoListId: Int!, content: String): TodoItem!
 	updateTodoItem(id: Int!, content: String, isComplete: Status): TodoItem

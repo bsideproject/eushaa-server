@@ -42,7 +42,7 @@ const resolvers = {
 		signup: (_, { email, name, password }) => user.insertUser(email, name, password),
 		updateUser: (_, { id, name, team_id, type }) => user.update(id, { name, team_id, type }),
 		matchTeam: (_, { userId, type }) => user.matchTeam(userId, type),
-
+		deleteUser: (_, { id }) => user.delete(id),
 
 		makeTodoList: (_, { userId, title }) => {
 			if (!/^\d{4}-\d{2}-\d{2}$/.test(title)) {

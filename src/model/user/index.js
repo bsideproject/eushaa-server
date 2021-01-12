@@ -104,6 +104,21 @@ exports.update = async (id, updateData) => {
 	const [result, user] = await User.update(updateData, { where: { id } });
 	return result;
 };
+exports.delete = async (id) => {
+	try {
+		await User.destroy({
+			where: {
+				id
+			}
+		})
+
+		return 1;
+	} catch (e) {
+		throw new Error("유저 삭제 실패")
+	}
+
+};
+
 exports.insertUser = async (email, name, password) => {
 	const salt = bcrypt.genSaltSync(saltRounds);
 
