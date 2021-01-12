@@ -1,7 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-	class guages extends Model {
+	class Gauges extends Model {
 		/**
 		 * Helper method for defining associations.
 		 * This method is not a part of Sequelize lifecycle.
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 			// define association here
 		}
 	}
-	guages.init(
+	Gauges.init(
 		{
 			level: { type: DataTypes.INTEGER, allowNull: false },
 			guage: { type: DataTypes.INTEGER, allowNull: false },
@@ -24,5 +24,5 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	);
 
-	return guages;
+	return Gauges;
 };

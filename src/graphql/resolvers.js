@@ -9,6 +9,7 @@ const team = require('../model/team');
 const userType = require('../model/user_type');
 const teamType = require('../model/team_type');
 const character = require('../model/character');
+const gaugeModel = require('../model/gauge')
 
 const resolvers = {
 
@@ -116,6 +117,7 @@ const resolvers = {
 		members: ({ id }) => team.getUsersByTeamId(id),
 		teamType: ({ id }) => teamType.getByTeamId(id),
 		spaces: ({ id, level, gauge }) => spaceItem.getAllSpaceItemsByTeam({ teamId: id, level, gauge }),
+		gauge: ({ level, gauge }) => gaugeModel.get({ level, gauge })
 	},
 };
 

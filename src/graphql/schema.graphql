@@ -88,11 +88,18 @@ type TodoItem {
 type Team {
 	id: String!
 	level: Int
-	gauge: Int
+	gauge: Gauge
 	created_at: Date
 	members: [User]
 	teamType: TeamType
 	spaces: [Space]
+}
+
+type Gauge {
+	id: Int
+	guage: Int!
+	level: Int
+	image: String!
 }
 
 type Levels {
