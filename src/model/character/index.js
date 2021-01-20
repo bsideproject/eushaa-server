@@ -48,8 +48,8 @@ exports.getLogsByUserId = async (userId, count = 10) => {
         const character = {
             id: items[0].characterId,
             image: items[0].characterImage,
-            characterItems: items.map(({ characterItemId: id, characterItemPosX: pos_x, characterItemPosY: pos_y, characterItemImage: image }) => {
-                return { id, image, is_active: 'Y', pos_x, pos_y }
+            characterItems: items.map(({ characterItemId: id, characterItemName: name, characterItemPosX: pos_x, characterItemPosY: pos_y, characterItemImage: image }) => {
+                return { id, name, image, is_active: 'Y', pos_x, pos_y }
             })
         }
         return character
