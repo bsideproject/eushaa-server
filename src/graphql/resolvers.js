@@ -42,6 +42,7 @@ const resolvers = {
 		signup: (_, { email, name, password }) => user.insertUser(email, name, password),
 		updateUser: (_, { id, name, team_id, type }) => user.update(id, { name, team_id, type }),
 		matchTeam: (_, { userId, type }) => user.matchTeam(userId, type),
+		exitTeam: (_, { userId }) => user.exitTeam(userId),
 		deleteUser: (_, { id }) => user.delete(id),
 
 		makeTodoList: (_, { userId, title }) => {
