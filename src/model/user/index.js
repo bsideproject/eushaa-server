@@ -188,3 +188,11 @@ exports.matchTeam = async (id, type) => {
 	return user;
 }
 
+exports.exitTeam = async (id) => {
+	const [result, user] = await User.update({ team_id: null }, {
+		where: {
+			id
+		}
+	})
+	return result
+}
