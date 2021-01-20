@@ -21,6 +21,7 @@ const insertLogs = async () => {
             u.character_id characterId,
             c.image characterImage,
             ci.id characterItemId,
+            ci.name characterItemName,
             ci.pos_x characterItemPosX,
             ci.pos_y characterItemPosY,
             ci.activate_image characterItemImage
@@ -35,13 +36,14 @@ const insertLogs = async () => {
         ORDER BY u.id, ci.id
     `)
 
-    const userItemsMap = rows.reduce((acc, { userId, characterId, characterImage, characterItemId, characterItemPosX, characterItemPosY, characterItemImage }) => {
+    const userItemsMap = rows.reduce((acc, { userId, characterId, characterImage, characterItemId, characterItemName, characterItemPosX, characterItemPosY, characterItemImage }) => {
         if (!acc[userId]) acc[userId] = [];
 
         acc[userId].push({
             characterId,
             characterImage,
             characterItemId,
+            characterItemName,
             characterItemPosX,
             characterItemPosY,
             characterItemImage
@@ -61,3 +63,4 @@ const j = schedule.scheduleJob('00 59 23 * * 0-6', async () => {
     console.log("do character log batch")
     await insertLogs()
 })
+
